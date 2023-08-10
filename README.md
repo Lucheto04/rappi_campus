@@ -6,10 +6,11 @@
 
 #### Collaboradores
 
-latinoamericacampus233@gmail.com
+- latinoamericacampus233@gmail.com
 
 #### Autores
 
-John Gonzalez 
-Luis Rueda
+- John Gonzalez 
+
+- Luis Rueda
 
