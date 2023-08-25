@@ -1,7 +1,11 @@
 use("db_rappi_campus");
 db.createCollection("counters");
 db.counters.insertMany([
+    { id: "restaurantesId", sequence_value: 0 },
+    { id: "productosId", sequence_value: 0 },
+    { id: "rappi_tenderoId", sequence_value: 0 },
     { id: "usuariosId", sequence_value: 0 },
+    { id: "cuponesId", sequence_value: 0 },
     { id: "pedidosId", sequence_value: 0 },
 ]);
 
@@ -13,12 +17,12 @@ db.createCollection("usuarios", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id', 'nombre_usuario', 'email', 'password', 'movil', 'nombre_completo'],
+            required: ['_id', 'id_usuario', 'nombre_usuario', 'email', 'password', 'movil', 'nombre_completo'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
                 },
-                id: {
+                id_usuario: {
                     bsonType: 'int'
                 },
                 nombre_usuario: {
@@ -61,3 +65,173 @@ db.createCollection("usuarios", {
         }
     }
 });
+
+db.createCollection("productos", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_producto', 'restaurante_id', 'nombre_producto', 'descripcion', 'precio', 'nombre_completo'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_producto: {
+                    bsonType: 'int'
+                },
+                nombre_producto: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_producto es obligatorio y debe ser un string.`
+                },
+                restaurante_id: {
+                    bsonType: 'int',
+                    description: `El parametro nombre_usuario es obligatorio y debe ser un numero entero (int).`
+                },
+                descripcion: {
+                    bsonType: 'string',
+                    description: `El parametro descripcion es obligatorio y debe ser un string.`
+                },
+                precio: {
+                    bsonType: 'int',
+                    description: `El parametro precio es obligatorio y debe ser un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("rappi_tendero", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_tendero', 'email', 'password', 'movil', 'nombre_completo'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_tendero: {
+                    bsonType: 'int'
+                },
+                email: {
+                    bsonType: 'string',
+                    description: `El parametro email es obligatorio y debe ser un string.`
+                },
+                password: {
+                    bsonType: 'string',
+                    description: `El parametro password es obligatorio y debe ser un string.`
+                },
+                movil: {
+                    bsonType: 'string',
+                    description: `El parametro movil es obligatorio y debe ser un string.`
+                },
+                nombre_completo: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
+                },
+                rol: { 
+                    bsonType: 'string',
+                    description: `El parametro rol es obligatorio y debe ser un string.`
+                },
+                permisos: { 
+                    bsonType: 'object',
+                    description: "Ingrese los permisos",
+                    required: ["/productos"],
+                    additionalProperties: {
+                        bsonType: "array",
+                        items: {
+                            bsonType: "string",
+                            description: "Ingrese la version autorizada",
+                        } 
+                    }
+                },
+            }
+        }
+    }
+});
+
+db.createCollection("restaurantes", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_restaurante','nombre', 'direccion', 'calificacion', 'nombre_completo'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_restaurante: {
+                    bsonType: 'int'
+                },
+                nombre: {
+                    bsonType: 'string',
+                    description: `El parametro nombre es obligatorio y debe ser un string.`
+                },
+                direccion: {
+                    bsonType: 'string',
+                    description: `El parametro direccion es obligatorio y debe ser un string.`
+                },
+                calificacion: {
+                    bsonType: 'int',
+                    description: `El parametro calificacion es obligatorio y debe ser un numero entero (int).`
+                },
+                rol: { 
+                    bsonType: 'string',
+                    description: `El parametro rol es obligatorio y debe ser un string.`
+                },
+                permisos: { 
+                    bsonType: 'object',
+                    description: "Ingrese los permisos",
+                    required: ["/productos"],
+                    additionalProperties: {
+                        bsonType: "array",
+                        items: {
+                            bsonType: "string",
+                            description: "Ingrese la version autorizada",
+                        } 
+                    }
+                },
+            }
+        }
+    }
+});
+
+db.createCollection("cupones", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_cupon','usuario_id', 'descripcion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_cupon: {
+                    bsonType: 'int'
+                },
+                usuario_id: {
+                    bsonType: 'int',
+                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                },
+                descripcion: {
+                    bsonType: 'string',
+                    description: `El parametro descripcion es obligatorio y debe ser un string.`
+                }
+            }
+        }
+    }
+});
+
+
