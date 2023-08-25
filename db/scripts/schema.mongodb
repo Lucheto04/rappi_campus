@@ -6,6 +6,7 @@ db.counters.insertMany([
     { id: "rappi_tenderoId", sequence_value: 0 },
     { id: "usuariosId", sequence_value: 0 },
     { id: "cuponesId", sequence_value: 0 },
+    { id: "direccionesId", sequence_value: 0 },
     { id: "pedidosId", sequence_value: 0 },
 ]);
 
@@ -234,4 +235,73 @@ db.createCollection("cupones", {
     }
 });
 
+db.createCollection("direcciones", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_direccion', 'usuario_id', 'direccion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_direccion: {
+                    bsonType: 'int'
+                },
+                usuario_id: {
+                    bsonType: 'int',
+                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                },
+                direccion: {
+                    bsonType: 'int',
+                    description: `El parametro direccion es obligatorio y debe ser un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("pedidos", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_pedido', 'usuario_id', 'restaurante_id', 'productos', 'direccion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_pedido: {
+                    bsonType: 'int'
+                },
+                usuario_id: {
+                    bsonType: 'int',
+                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                },
+                restaurante_id: {
+                    bsonType: 'int',
+                    description: `El parametro restaurante_id es obligatorio y debe ser un numero entero (int).`
+                },
+                productos: {
+                    bsonType: 'array',
+                    description: `El parametro productos es obligatorio y debe ser un array de numeros enteros (int).`,
+                    items: {
+                        bsonType: 'int',
+                        descripcion: `Debes ingresar los id's de los productos ya existentes.`
+                    }
+                },
+                direccion: {
+                    bsonType: 'string || int',
+                    description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
+                }
+            }
+        }
+    }
+});
 
