@@ -1,4 +1,4 @@
-import { conexion } from "../../config/db/atlas.js";
+import { conexion } from "../../config/connection/atlas.js";
 
 
 export default async function siguienteId(coleccionName) {
