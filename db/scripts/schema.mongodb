@@ -40,7 +40,23 @@ db.createCollection("usuarios", {
                 nombre_completo: {
                     bsonType: 'string',
                     description: `El parametro nombre_completo es obligatorio y debe ser un string.`
-                }
+                },
+                rol: { 
+                    bsonType: 'string',
+                    description: `El parametro rol es obligatorio y debe ser un string.`
+                },
+                permisos: { 
+                    bsonType: 'object',
+                    description: "Ingrese los permisos",
+                    required: ["/productos"],
+                    additionalProperties: {
+                        bsonType: "array",
+                        items: {
+                            bsonType: "string",
+                            description: "Ingrese la version autorizada",
+                        } 
+                    }
+                },
             }
         }
     }
