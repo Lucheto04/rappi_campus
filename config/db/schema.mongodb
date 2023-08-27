@@ -145,7 +145,7 @@ db.createCollection("productos", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_producto', 'restaurante_id', 'nombre_producto', 'descripcion', 'precio', 'nombre_completo'],
+            required: ['_id', 'id_producto', 'restaurante_id', 'nombre_producto', 'descripcion', 'precio'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -173,7 +173,64 @@ db.createCollection("productos", {
         }
     }
 });
-
+db.productos.insertMany([
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Pizaa",
+        restaurante_id:1,
+        descripcion: "Pizza super hipermega buena, de la Tienda el pancho, una porción de lo que necesitas",
+        precio: 8000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Hamburguesa",
+        restaurante_id:1,
+        descripcion: "Hamburguesa con super hipermega carne, la Tienda el pancho, agrega lo que quieras para que no repitas 😉",
+        precio: 25000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Ensalada",
+        restaurante_id:2,
+        descripcion: "Si buscas algo ligero y con suficiente nutrientes para tu dia a dia en la Tienda el pancho también pensamos en ti 🫡 ",
+        precio: 15000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Pollo",
+        restaurante_id:2,
+        descripcion: "Pollo asado al carbon acompañado de papas saladas,maduro,arepa,sopa y salsa de la casa",
+        precio: 43000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Salchipapa",
+        restaurante_id:3,
+        descripcion: "Porcion de salchipapa con queso rallado, salchichon, tartara, y salsa de la casa.",
+        precio: 15000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Sushi",
+        restaurante_id:3,
+        descripcion: "2 rollos apanados en panko 20 bocados,con centro de salmón,aguacate y queso crema",
+        precio: 40000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Postre",
+        restaurante_id:4,
+        descripcion: "Suave flan de leche sobre torta de vainilla y un centro de salsa de mora natural",
+        precio: 63700
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Helado",
+        restaurante_id:4,
+        descripcion: "Helado con sabor a seleccion,tajadas de banano, crema de chocolate y cereza",
+        precio: 10500
+    }
+]);
 db.createCollection("rappi_tendero", {
     capped: true,
     size: 5000,
