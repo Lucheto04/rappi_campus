@@ -10,6 +10,15 @@ db.counters.insertMany([
     { id: "pedidosId", sequence_value: 0 },
 ]);
 
+function nextID(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+;
 db.createCollection("usuarios", {
     capped: true,
     size: 5000,
@@ -18,7 +27,7 @@ db.createCollection("usuarios", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_usuario', 'nombre_usuario', 'email', 'password', 'movil', 'nombre_completo'],
+            required: ['_id', 'id_usuario', 'nombre_usuario', 'nombre_completo' ,'email', 'password', 'rol' ],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -29,6 +38,10 @@ db.createCollection("usuarios", {
                 nombre_usuario: {
                     bsonType: 'string',
                     description: `El parametro nombre_usuario es obligatorio y debe ser un string.`
+                },
+                nombre_completo: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
                 },
                 email: {
                     bsonType: 'string',
@@ -42,31 +55,88 @@ db.createCollection("usuarios", {
                     bsonType: 'string',
                     description: `El parametro movil es obligatorio y debe ser un string.`
                 },
-                nombre_completo: {
-                    bsonType: 'string',
-                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
-                },
                 rol: { 
-                    bsonType: 'string',
-                    description: `El parametro rol es obligatorio y debe ser un string.`
-                },
-                permisos: { 
-                    bsonType: 'object',
-                    description: "Ingrese los permisos",
-                    required: ["/productos"],
-                    additionalProperties: {
-                        bsonType: "array",
-                        items: {
-                            bsonType: "string",
-                            description: "Ingrese la version autorizada",
-                        } 
-                    }
-                },
+                    bsonType: 'int',
+                    description: `El parametro rol es obligatorio y debe ser un int.`
+                }
             }
         }
     }
 });
-
+db.usuarios.insertMany([
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Sebas23_drak",
+        nombre_completo: "Sebastian Enrique Gomez Salazar",
+        email: "sebas23@gmail.com",
+        password: "sebas23123",
+        movil: "+573150918321",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Nati33_21",
+        nombre_completo: "Natalia Valentina Martinez Pedraza",
+        email: "Natalia@hotmail.com",
+        password: "nati2p313",
+        movil: "+573164379245",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Maar1_057",
+        nombre_completo: "Maria Fernanda Granados Camargo",
+        email: "Maria@hotmail.com",
+        password: "Marii2.3",
+        movil: "+573130928042",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "J0hn_224",
+        nombre_completo: "John Edward González Esparragoza",
+        email: "jOhn@gmail.com",
+        password: "pedroClav0UnCl@vito",
+        movil: "+573150918321",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "joseDavidRamirez",
+        nombre_completo: "Jose David Ramirez Mogotocoro",
+        email: "elJose@gmail.com",
+        password: "joseChiquito123",
+        movil: "+573151793552",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Dann@",
+        nombre_completo: "Danna Sofía Villamizar Duarte",
+        email: "Danna@gmail.com",
+        password: "elvajito123",
+        movil: "+573128488725",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Danii_768",
+        nombre_completo: "Daniela Perez Salcedo",
+        email: "Daniela@gmail.com",
+        password: "elAltito123",
+        movil: "+573123254417",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "ElEspantaViejas_3000",
+        nombre_completo: "Mateo Amado Villamizar",
+        email: "Mateo@gmail.com",
+        password: "elHambriEnto123",
+        movil: "+573128754917",
+        rol: 2
+    }
+])
 db.createCollection("productos", {
     capped: true,
     size: 5000,
