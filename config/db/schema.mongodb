@@ -1,0 +1,470 @@
+use("db_rappi_campus");
+db.createCollection("counters");
+db.counters.insertMany([
+    { id: "restaurantesId", sequence_value: 0 },
+    { id: "productosId", sequence_value: 0 },
+    { id: "rappi_tenderoId", sequence_value: 0 },
+    { id: "usuariosId", sequence_value: 0 },
+    { id: "cuponesId", sequence_value: 0 },
+    { id: "direccionesId", sequence_value: 0 },
+    { id: "pedidosId", sequence_value: 0 },
+]);
+
+function nextID(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+;
+db.createCollection("usuarios", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_usuario', 'nombre_usuario', 'nombre_completo' ,'email', 'password', 'rol' ],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_usuario: {
+                    bsonType: 'int'
+                },
+                nombre_usuario: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_usuario es obligatorio y debe ser un string.`
+                },
+                nombre_completo: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
+                },
+                email: {
+                    bsonType: 'string',
+                    description: `El parametro email es obligatorio y debe ser un string.`
+                },
+                password: {
+                    bsonType: 'string',
+                    description: `El parametro password es obligatorio y debe ser un string.`
+                },
+                movil: {
+                    bsonType: 'string',
+                    description: `El parametro movil es obligatorio y debe ser un string.`
+                },
+                rol: { 
+                    bsonType: 'int',
+                    description: `El parametro rol es obligatorio y debe ser un int.`
+                }
+            }
+        }
+    }
+});
+db.usuarios.insertMany([
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Sebas23_drak",
+        nombre_completo: "Sebastian Enrique Gomez Salazar",
+        email: "sebas23@gmail.com",
+        password: "sebas23123",
+        movil: "+573150918321",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Nati33_21",
+        nombre_completo: "Natalia Valentina Martinez Pedraza",
+        email: "Natalia@hotmail.com",
+        password: "nati2p313",
+        movil: "+573164379245",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Maar1_057",
+        nombre_completo: "Maria Fernanda Granados Camargo",
+        email: "Maria@hotmail.com",
+        password: "Marii2.3",
+        movil: "+573130928042",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "J0hn_224",
+        nombre_completo: "John Edward González Esparragoza",
+        email: "jOhn@gmail.com",
+        password: "pedroClav0UnCl@vito",
+        movil: "+573150918321",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "joseDavidRamirez",
+        nombre_completo: "Jose David Ramirez Mogotocoro",
+        email: "elJose@gmail.com",
+        password: "joseChiquito123",
+        movil: "+573151793552",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Dann@",
+        nombre_completo: "Danna Sofía Villamizar Duarte",
+        email: "Danna@gmail.com",
+        password: "elvajito123",
+        movil: "+573128488725",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "Danii_768",
+        nombre_completo: "Daniela Perez Salcedo",
+        email: "Daniela@gmail.com",
+        password: "elAltito123",
+        movil: "+573123254417",
+        rol: 2
+    },
+    {
+        id_usuario: Number(nextID('usuarios')),
+        nombre_usuario: "ElEspantaViejas_3000",
+        nombre_completo: "Mateo Amado Villamizar",
+        email: "Mateo@gmail.com",
+        password: "elHambriEnto123",
+        movil: "+573128754917",
+        rol: 2
+    }
+])
+db.createCollection("productos", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_producto', 'restaurante_id', 'nombre_producto', 'descripcion', 'precio'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_producto: {
+                    bsonType: 'int'
+                },
+                nombre_producto: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_producto es obligatorio y debe ser un string.`
+                },
+                restaurante_id: {
+                    bsonType: 'int',
+                    description: `El parametro nombre_usuario es obligatorio y debe ser un numero entero (int).`
+                },
+                descripcion: {
+                    bsonType: 'string',
+                    description: `El parametro descripcion es obligatorio y debe ser un string.`
+                },
+                precio: {
+                    bsonType: 'int',
+                    description: `El parametro precio es obligatorio y debe ser un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+db.productos.insertMany([
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Pizaa",
+        restaurante_id:1,
+        descripcion: "Pizza super hipermega buena, de la Tienda el pancho, una porción de lo que necesitas",
+        precio: 8000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Hamburguesa",
+        restaurante_id:1,
+        descripcion: "Hamburguesa con super hipermega carne, la Tienda el pancho, agrega lo que quieras para que no repitas 😉",
+        precio: 25000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Ensalada",
+        restaurante_id:2,
+        descripcion: "Si buscas algo ligero y con suficiente nutrientes para tu dia a dia en la Tienda elvaJito también pensamos en ti 🫡 ",
+        precio: 15000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Pollo",
+        restaurante_id:2,
+        descripcion: "Pollo asado al carbon acompañado de papas saladas,maduro,arepa,sopa y salsa de la casa",
+        precio: 43000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Salchipapa",
+        restaurante_id:3,
+        descripcion: "Porcion de salchipapa con queso rallado, salchichon, tartara, y salsa de la casa.",
+        precio: 15000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Sushi",
+        restaurante_id:3,
+        descripcion: "2 rollos apanados en panko 20 bocados,con centro de salmón,aguacate y queso crema",
+        precio: 40000
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Postre",
+        restaurante_id:4,
+        descripcion: "Suave flan de leche sobre torta de vainilla y un centro de salsa de mora natural",
+        precio: 63700
+    },
+    {
+        id_producto:Number(nextID('productos')),
+        nombre_producto:"Helado",
+        restaurante_id:4,
+        descripcion: "Helado con sabor a seleccion,tajadas de banano, crema de chocolate y cereza",
+        precio: 10500
+    }
+]);
+db.createCollection("rappi_tendero", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_tendero','nombre_completo' ,'email', 'password', 'movil'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_tendero: {
+                    bsonType: 'int'
+                },
+                nombre_completo: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
+                },
+                email: {
+                    bsonType: 'string',
+                    description: `El parametro email es obligatorio y debe ser un string.`
+                },
+                password: {
+                    bsonType: 'string',
+                    description: `El parametro password es obligatorio y debe ser un string.`
+                },
+                movil: {
+                    bsonType: 'string',
+                    description: `El parametro movil es obligatorio y debe ser un string.`
+                }
+            }
+        }
+    }
+});
+db.rappi_tendero.insertMany([
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Pancho Gerardo Martinez Martinez",
+        email:"pancho@gmail.com",
+        password:"panchit0001",
+        movil:"+573156794374"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Pedro Alonso Calcedo Ramirez",
+        email:"Pedro@gmail.com",
+        password:"elvajit00_2023",
+        movil:"+573138462772"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Oscar Felipe Llano Valencia",
+        email:"Oscar@gmail.com",
+        password:"deTodito_32023",
+        movil:"+573150403252"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Andres Felipe Lopez García",
+        email:"Andres@gmail.com",
+        password:"venchII_23",
+        movil:"+573169532612"
+    }
+]);
+
+db.createCollection("restaurantes", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_restaurante','nombre', 'direccion', 'calificacion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_restaurante: {
+                    bsonType: 'int'
+                },
+                nombre: {
+                    bsonType: 'string',
+                    description: `El parametro nombre es obligatorio y debe ser un string.`
+                }, 
+                direccion: {
+                    bsonType: 'string',
+                    description: `El parametro direccion es obligatorio y debe ser un string.`
+                },
+                calificacion: {
+                    bsonType: 'int',
+                    enum:[1,2,3,4,5],
+                    description: `El parametro calificacion es obligatorio y debe ser un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+db.restaurantes.insertMany([
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Don Pancho",
+        direccion:"Transversal 28B",
+        calificacion:4
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Elvajito",
+        direccion:"Calle 65A #27-12 Gonzalez Valencia",
+        calificacion:3
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Detodito",
+        direccion:"Av Siempre Viva",
+        calificacion:4
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Vanchi Desserts",
+        direccion:"Transversal 28B",
+        calificacion:4
+    }
+]);
+db.createCollection("cupones", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_cupon','cupon','expiracion','descuento'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_cupon: {
+                    bsonType: 'int'
+                },
+                cupon:{
+                    bsonType:'string',
+                    pattern:'^[A-Za-z0-9]+$'
+                },
+                expiracion:{
+                    bsonType:'date'
+                },
+                id_usuario_utiliza: {
+                    bsonType: 'int',
+                    description: `El parametro id_usuario_utiliza debe ser un numero entero (int).`
+                },
+                descuento: {
+                    bsonType: 'int',
+                    description: `El parametro descuento es obligatorio y debe ser un string.`
+                }
+            }
+        }
+    }
+});
+db.cupones.insertMany([
+    {
+
+    }
+])
+
+db.createCollection("direcciones", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_direccion', 'usuario_id', 'direccion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_direccion: {
+                    bsonType: 'int'
+                },
+                usuario_id: {
+                    bsonType: 'int',
+                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                },
+                direccion: {
+                    bsonType: 'int',
+                    description: `El parametro direccion es obligatorio y debe ser un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("pedidos", {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+        bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'id_pedido', 'usuario_id', 'restaurante_id', 'productos', 'direccion'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                id_pedido: {
+                    bsonType: 'int'
+                },
+                usuario_id: {
+                    bsonType: 'int',
+                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                },
+                restaurante_id: {
+                    bsonType: 'int',
+                    description: `El parametro restaurante_id es obligatorio y debe ser un numero entero (int).`
+                },
+                productos: {
+                    bsonType: 'array',
+                    description: `El parametro productos es obligatorio y debe ser un array de numeros enteros (int).`,
+                    items: {
+                        bsonType: 'int',
+                        descripcion: `Debes ingresar los id's de los productos ya existentes.`
+                    }
+                },
+                direccion: {
+                    bsonType: 'string || int',
+                    description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
+                }
+            }
+        }
+    }
+});
+
