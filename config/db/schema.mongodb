@@ -192,7 +192,7 @@ db.productos.insertMany([
         id_producto:Number(nextID('productos')),
         nombre_producto:"Ensalada",
         restaurante_id:2,
-        descripcion: "Si buscas algo ligero y con suficiente nutrientes para tu dia a dia en la Tienda el pancho también pensamos en ti 🫡 ",
+        descripcion: "Si buscas algo ligero y con suficiente nutrientes para tu dia a dia en la Tienda elvaJito también pensamos en ti 🫡 ",
         precio: 15000
     },
     {
@@ -239,13 +239,17 @@ db.createCollection("rappi_tendero", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_tendero', 'email', 'password', 'movil', 'nombre_completo'],
+            required: ['_id', 'id_tendero','nombre_completo' ,'email', 'password', 'movil'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
                 },
                 id_tendero: {
                     bsonType: 'int'
+                },
+                nombre_completo: {
+                    bsonType: 'string',
+                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
                 },
                 email: {
                     bsonType: 'string',
@@ -258,31 +262,41 @@ db.createCollection("rappi_tendero", {
                 movil: {
                     bsonType: 'string',
                     description: `El parametro movil es obligatorio y debe ser un string.`
-                },
-                nombre_completo: {
-                    bsonType: 'string',
-                    description: `El parametro nombre_completo es obligatorio y debe ser un string.`
-                },
-                rol: { 
-                    bsonType: 'string',
-                    description: `El parametro rol es obligatorio y debe ser un string.`
-                },
-                permisos: { 
-                    bsonType: 'object',
-                    description: "Ingrese los permisos",
-                    required: ["/productos"],
-                    additionalProperties: {
-                        bsonType: "array",
-                        items: {
-                            bsonType: "string",
-                            description: "Ingrese la version autorizada",
-                        } 
-                    }
-                },
+                }
             }
         }
     }
 });
+db.rappi_tendero.insertMany([
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Pancho Gerardo Martinez Martinez",
+        email:"pancho@gmail.com",
+        password:"panchit0001",
+        movil:"+573156794374"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Pedro Alonso Calcedo Ramirez",
+        email:"Pedro@gmail.com",
+        password:"elvajit00_2023",
+        movil:"+573138462772"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Oscar Felipe Llano Valencia",
+        email:"Oscar@gmail.com",
+        password:"deTodito_32023",
+        movil:"+573150403252"
+    },
+    {
+        id_tendero:Number(nextID('rappi_tendero')),
+        nombre_completo:"Andres Felipe Lopez García",
+        email:"Andres@gmail.com",
+        password:"venchII_23",
+        movil:"+573169532612"
+    }
+]);
 
 db.createCollection("restaurantes", {
     capped: true,
