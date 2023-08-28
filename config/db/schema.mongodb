@@ -365,7 +365,7 @@ db.createCollection("cupones", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_cupon','cupon','descuento'],
+            required: ['_id', 'id_cupon','cupon','expiracion','descuento'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -376,6 +376,9 @@ db.createCollection("cupones", {
                 cupon:{
                     bsonType:'string',
                     pattern:'^[A-Za-z0-9]+$'
+                },
+                expiracion:{
+                    bsonType:'date'
                 },
                 id_usuario_utiliza: {
                     bsonType: 'int',
