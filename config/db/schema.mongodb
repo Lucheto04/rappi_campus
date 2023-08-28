@@ -306,7 +306,7 @@ db.createCollection("restaurantes", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_restaurante','nombre', 'direccion', 'calificacion', 'nombre_completo'],
+            required: ['_id', 'id_restaurante','nombre', 'direccion', 'calificacion'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -317,36 +317,46 @@ db.createCollection("restaurantes", {
                 nombre: {
                     bsonType: 'string',
                     description: `El parametro nombre es obligatorio y debe ser un string.`
-                },
+                }, 
                 direccion: {
                     bsonType: 'string',
                     description: `El parametro direccion es obligatorio y debe ser un string.`
                 },
                 calificacion: {
                     bsonType: 'int',
+                    enum:[1,2,3,4,5],
                     description: `El parametro calificacion es obligatorio y debe ser un numero entero (int).`
-                },
-                rol: { 
-                    bsonType: 'string',
-                    description: `El parametro rol es obligatorio y debe ser un string.`
-                },
-                permisos: { 
-                    bsonType: 'object',
-                    description: "Ingrese los permisos",
-                    required: ["/productos"],
-                    additionalProperties: {
-                        bsonType: "array",
-                        items: {
-                            bsonType: "string",
-                            description: "Ingrese la version autorizada",
-                        } 
-                    }
-                },
+                }
             }
         }
     }
 });
-
+db.restaurantes.insertMany([
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Don Pancho",
+        direccion:"Transversal 28B",
+        calificacion:4
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Elvajito",
+        direccion:"Calle 65A #27-12 Gonzalez Valencia",
+        calificacion:3
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Tienda Detodito",
+        direccion:"Av Siempre Viva",
+        calificacion:4
+    },
+    {
+        id_restaurante: Number(nextID('restaurantes')),
+        nombre:"Vanchi Desserts",
+        direccion:"Transversal 28B",
+        calificacion:4
+    }
+]);
 db.createCollection("cupones", {
     capped: true,
     size: 5000,
