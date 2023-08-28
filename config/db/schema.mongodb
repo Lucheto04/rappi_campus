@@ -365,7 +365,7 @@ db.createCollection("cupones", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_cupon','usuario_id', 'descripcion'],
+            required: ['_id', 'id_cupon','cupon','descuento'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -373,18 +373,27 @@ db.createCollection("cupones", {
                 id_cupon: {
                     bsonType: 'int'
                 },
-                usuario_id: {
-                    bsonType: 'int',
-                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
+                cupon:{
+                    bsonType:'string',
+                    pattern:'^[A-Za-z0-9]+$'
                 },
-                descripcion: {
-                    bsonType: 'string',
-                    description: `El parametro descripcion es obligatorio y debe ser un string.`
+                id_usuario_utiliza: {
+                    bsonType: 'int',
+                    description: `El parametro id_usuario_utiliza debe ser un numero entero (int).`
+                },
+                descuento: {
+                    bsonType: 'int',
+                    description: `El parametro descuento es obligatorio y debe ser un string.`
                 }
             }
         }
     }
 });
+db.cupones.insertMany([
+    {
+
+    }
+])
 
 db.createCollection("direcciones", {
     capped: true,
