@@ -548,7 +548,7 @@ db.createCollection("pedidos", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_pedido', 'usuario_id', 'restaurante_id', 'productos', 'direccion'],
+            required: ['_id', 'id_pedido', 'id_restaurante', 'productos', 'direccion'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -556,28 +556,85 @@ db.createCollection("pedidos", {
                 id_pedido: {
                     bsonType: 'int'
                 },
-                usuario_id: {
+                id_restaurante: {
                     bsonType: 'int',
-                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
-                },
-                restaurante_id: {
-                    bsonType: 'int',
-                    description: `El parametro restaurante_id es obligatorio y debe ser un numero entero (int).`
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
                 },
                 productos: {
                     bsonType: 'array',
                     description: `El parametro productos es obligatorio y debe ser un array de numeros enteros (int).`,
                     items: {
                         bsonType: 'int',
-                        descripcion: `Debes ingresar los id's de los productos ya existentes.`
+                        description: `Debes ingresar los id's de los productos ya existentes.`
                     }
                 },
                 direccion: {
-                    bsonType: 'string || int',
+                    bsonType: 'int',
                     description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
                 }
             }
         }
     }
 });
-
+db.pedidos.insertMany([
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 1,
+        productos: [1],
+        direccion:2
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 1,
+        productos: [1,2],
+        direccion: 1
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3, 4],
+        direccion: 3
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [4, 4],
+        direccion: 4
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 3,
+        productos: [5, 5],
+        direccion: 5
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 3,
+        productos: [6],
+        direccion: 6
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3],
+        direccion: 7
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3, 3],
+        direccion: 8
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 4,
+        productos: [8,8,8,8],
+        direccion: 3
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 4,
+        productos: [8, 8, 7],
+        direccion: 3
+    }
+]);
