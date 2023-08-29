@@ -365,7 +365,7 @@ db.createCollection("cupones", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_cupon','cupon','expiracion','descuento'],
+            required: ['_id', 'id_cupon','cupon','expiracion','descuento','valido'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -375,7 +375,6 @@ db.createCollection("cupones", {
                 },
                 cupon:{
                     bsonType:'string',
-                    pattern:'^[A-Za-z0-9]+$'
                 },
                 expiracion:{
                     bsonType:'date'
@@ -387,6 +386,10 @@ db.createCollection("cupones", {
                 descuento: {
                     bsonType: 'int',
                     description: `El parametro descuento es obligatorio y debe ser un string.`
+                },
+                valido: {
+                    bsonType: 'bool',
+                    description: "El parametro valido es obligatorio y debe ser boolean."
                 }
             }
         }
@@ -394,10 +397,79 @@ db.createCollection("cupones", {
 });
 db.cupones.insertMany([
     {
-
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SUMMER2023",
+        expiracion: new Date("2023-08-31T23:59:59Z"),
+        descuento: 20,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SALE50",
+        expiracion: new Date("2023-09-15T23:59:59Z"),
+        descuento: 50,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EXPIRED10",
+        expiracion: new Date("2023-07-01T23:59:59Z"),
+        id_usuario_utiliza: 5,
+        descuento: 10,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "FALL2023",
+        expiracion: new Date("2023-11-30T23:59:59Z"),
+        descuento: 15,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "HOLIDAY25",
+        expiracion: new Date("2023-12-25T23:59:59Z"),
+        descuento: 25,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "NEWYEAR10",
+        expiracion: new Date("2024-01-15T23:59:59Z"),
+        id_usuario_utiliza: 6,
+        descuento: 10,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SPECIAL15",
+        expiracion: new Date("2023-10-10T23:59:59Z"),
+        descuento: 15,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EARLYBIRD20",
+        expiracion: new Date("2023-09-01T23:59:59Z"),
+        descuento: 20,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SPRING2024",
+        expiracion: new Date("2024-04-30T23:59:59Z"),
+        descuento: 30,
+        id_usuario_utiliza: 3,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EXTRA5",
+        expiracion: new Date("2023-09-30T23:59:59Z"),
+        descuento: 5,
+        valido: true
     }
 ])
-
 db.createCollection("direcciones", {
     capped: true,
     size: 5000,
@@ -419,14 +491,55 @@ db.createCollection("direcciones", {
                     description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
                 },
                 direccion: {
-                    bsonType: 'int',
+                    bsonType: 'string',
                     description: `El parametro direccion es obligatorio y debe ser un numero entero (int).`
                 }
             }
         }
     }
 });
-
+db.direcciones.insertMany([
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 8,
+        direccion: "Carrera 13 # 34-56, Bogotá, Cundinamarca",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 1,
+        direccion: "Calle 70 # 23-45, Medellín, Antioquia",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 2,
+        direccion: "Avenida El Dorado # 100-30, Cali, Valle del Cauca",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 3,
+        direccion: "Carrera 7 # 123-45, Barranquilla, Atlántico",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 4,
+        direccion: "Calle 50 # 67-89, Cartagena, Bolívar",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 5,
+        direccion: "Carrera 10 # 23-45, Bucaramanga, Santander",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 6,
+        direccion: "Calle 12 # 34-56, Pereira, Risaralda",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 7,
+        direccion: "Calle 20 # 12-34, Villavicencio, Meta",
+    },
+]);
 db.createCollection("pedidos", {
     capped: true,
     size: 5000,
@@ -435,7 +548,7 @@ db.createCollection("pedidos", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_pedido', 'usuario_id', 'restaurante_id', 'productos', 'direccion'],
+            required: ['_id', 'id_pedido', 'id_restaurante', 'productos', 'direccion'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -443,28 +556,85 @@ db.createCollection("pedidos", {
                 id_pedido: {
                     bsonType: 'int'
                 },
-                usuario_id: {
+                id_restaurante: {
                     bsonType: 'int',
-                    description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
-                },
-                restaurante_id: {
-                    bsonType: 'int',
-                    description: `El parametro restaurante_id es obligatorio y debe ser un numero entero (int).`
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
                 },
                 productos: {
                     bsonType: 'array',
                     description: `El parametro productos es obligatorio y debe ser un array de numeros enteros (int).`,
                     items: {
                         bsonType: 'int',
-                        descripcion: `Debes ingresar los id's de los productos ya existentes.`
+                        description: `Debes ingresar los id's de los productos ya existentes.`
                     }
                 },
                 direccion: {
-                    bsonType: 'string || int',
+                    bsonType: 'int',
                     description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
                 }
             }
         }
     }
 });
-
+db.pedidos.insertMany([
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 1,
+        productos: [1],
+        direccion:2
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 1,
+        productos: [1,2],
+        direccion: 1
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3, 4],
+        direccion: 3
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [4, 4],
+        direccion: 4
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 3,
+        productos: [5, 5],
+        direccion: 5
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 3,
+        productos: [6],
+        direccion: 6
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3],
+        direccion: 7
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 2,
+        productos: [3, 3],
+        direccion: 8
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 4,
+        productos: [8,8,8,8],
+        direccion: 3
+    },
+    {
+        id_pedido: Number(nextID('pedidos')),
+        id_restaurante: 4,
+        productos: [8, 8, 7],
+        direccion: 3
+    }
+]);
