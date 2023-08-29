@@ -491,14 +491,55 @@ db.createCollection("direcciones", {
                     description: `El parametro usuario_id es obligatorio y debe ser un numero entero (int).`
                 },
                 direccion: {
-                    bsonType: 'int',
+                    bsonType: 'string',
                     description: `El parametro direccion es obligatorio y debe ser un numero entero (int).`
                 }
             }
         }
     }
 });
-
+db.direcciones.insertMany([
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 8,
+        direccion: "Carrera 13 # 34-56, Bogotá, Cundinamarca",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 1,
+        direccion: "Calle 70 # 23-45, Medellín, Antioquia",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 2,
+        direccion: "Avenida El Dorado # 100-30, Cali, Valle del Cauca",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 3,
+        direccion: "Carrera 7 # 123-45, Barranquilla, Atlántico",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 4,
+        direccion: "Calle 50 # 67-89, Cartagena, Bolívar",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 5,
+        direccion: "Carrera 10 # 23-45, Bucaramanga, Santander",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 6,
+        direccion: "Calle 12 # 34-56, Pereira, Risaralda",
+    },
+    {
+        id_direccion: Number(nextID('direcciones')),
+        usuario_id: 7,
+        direccion: "Calle 20 # 12-34, Villavicencio, Meta",
+    },
+]);
 db.createCollection("pedidos", {
     capped: true,
     size: 5000,
