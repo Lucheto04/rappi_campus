@@ -365,7 +365,7 @@ db.createCollection("cupones", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_cupon','cupon','expiracion','descuento'],
+            required: ['_id', 'id_cupon','cupon','expiracion','descuento','valido'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
@@ -375,7 +375,6 @@ db.createCollection("cupones", {
                 },
                 cupon:{
                     bsonType:'string',
-                    pattern:'^[A-Za-z0-9]+$'
                 },
                 expiracion:{
                     bsonType:'date'
@@ -387,6 +386,10 @@ db.createCollection("cupones", {
                 descuento: {
                     bsonType: 'int',
                     description: `El parametro descuento es obligatorio y debe ser un string.`
+                },
+                valido: {
+                    bsonType: 'bool',
+                    description: "El parametro valido es obligatorio y debe ser boolean."
                 }
             }
         }
@@ -394,10 +397,79 @@ db.createCollection("cupones", {
 });
 db.cupones.insertMany([
     {
-
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SUMMER2023",
+        expiracion: new Date("2023-08-31T23:59:59Z"),
+        descuento: 20,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SALE50",
+        expiracion: new Date("2023-09-15T23:59:59Z"),
+        descuento: 50,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EXPIRED10",
+        expiracion: new Date("2023-07-01T23:59:59Z"),
+        id_usuario_utiliza: 5,
+        descuento: 10,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "FALL2023",
+        expiracion: new Date("2023-11-30T23:59:59Z"),
+        descuento: 15,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "HOLIDAY25",
+        expiracion: new Date("2023-12-25T23:59:59Z"),
+        descuento: 25,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "NEWYEAR10",
+        expiracion: new Date("2024-01-15T23:59:59Z"),
+        id_usuario_utiliza: 6,
+        descuento: 10,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SPECIAL15",
+        expiracion: new Date("2023-10-10T23:59:59Z"),
+        descuento: 15,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EARLYBIRD20",
+        expiracion: new Date("2023-09-01T23:59:59Z"),
+        descuento: 20,
+        valido: true
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "SPRING2024",
+        expiracion: new Date("2024-04-30T23:59:59Z"),
+        descuento: 30,
+        id_usuario_utiliza: 3,
+        valido: false
+    },
+    {
+        id_cupon: Number(nextID('cupones')),
+        cupon: "EXTRA5",
+        expiracion: new Date("2023-09-30T23:59:59Z"),
+        descuento: 5,
+        valido: true
     }
 ])
-
 db.createCollection("direcciones", {
     capped: true,
     size: 5000,
