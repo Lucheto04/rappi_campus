@@ -50,10 +50,11 @@ export const putUsuarios = async (req, res) => {
         const json = Object.assign({nombre_usuario, nombre_completo, email, password, movil, rol})
         
         // Update document
-        await usuario.updateOne(
+        const result = await usuario.updateOne(
             {id_usuario: parseInt(id)},
             {$set: json}
         )
+        if(result.matchedCount === 0) return res.status(404).send('that usuario does not exist in the database');
 
         // Res consult...
         res.status(200).json({status:200,message:"Usuario updated successfully :D"});
