@@ -40,11 +40,50 @@ const postCupones = async (req, res) => {
             valido: validation
         }
         await cupones.insertOne(newParams)
-        res.status(201).json({status:201,message:'Cupon insertado correctamente :D'})
+        res.status(201).json({status:201,message:'Cupon inserted successfully :D'})
     } catch (error) {
         res.send(error)
     }
 
 }
-
-export{getAllCupones,postCupones}
+const putCupones = async (req, res) => {
+    //Validacion 
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) return res.status(422).send(errors);
+    try {
+        const id = req.params.id
+        
+        //*Cambiar nombres de fronted a backend
+        let data = req.body;
+        const dbNames = {
+            cupon:'cupon',
+            expiration: 'expiracion',
+            discount: 'descuento',
+            validation: 'valido',
+            id_userConsumer: 'id_usuario_utiliza'
+        }
+        let json = {};
+        // Cambia los datos del fronted al backend
+        for (const [fronted, backend] of Object.entries(dbNames)) {
+            json[backend] = data[fronted];
+        }
+        // Elimina valores undefined dentro del objeto
+        for (const clave in json) {
+            if (json[clave] === undefined) {
+                delete json[clave];
+            }
+        }
+        // Expiración de string a Date
+        if (json.hasOwnProperty('expiracion')) {
+            const { expiracion } = json;
+            const date = new Date(expiracion);
+            json.expiracion = date;
+        }
+        console.log(json);
+        await cupones.updateOne({id_cupon:Number(id)},{$set:json})
+        res.status(200).json({status:200,message:'sucessfully updated :D'})
+    } catch (error) {
+        res.send(error)
+    }
+}
+export{getAllCupones,postCupones,putCupones}
