@@ -12,14 +12,7 @@ export const getTendero = async (req, res) => {
         res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" })
     }
 }
-// {
-//     "_id": "64eeb14c586f9929fd87f609",
-//     "id_tendero": 1,
-//     "nombre_completo": "Pancho Gerardo Martinez Martinez",
-//     "email": "pancho@gmail.com",
-//     "password": "panchit0001",
-//     "movil": "+573156794374"
-// }
+
 export const postTendero = async (req, res,) => {
     try {
         const id = await siguienteId('rappi_tendero');
@@ -41,6 +34,29 @@ export const postTendero = async (req, res,) => {
 
         // Res consult...
         res.status(201).json({status:201,message:"'tendero' added successfully 😀"});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" });
+    }
+}
+
+export const putTendero = async (req, res) => {
+    try {
+        // Capture 'id' from req.query
+        const {id} = req.query
+
+        // change of variables
+        const {name: nombre_completo, email_tendero: email, password_tendero: password, movil_number: movil } = req.body;
+        const json = Object.assign({nombre_completo, email, password, movil});
+            
+        // Update document
+        const result = await tendero.updateOne(
+            {id_tendero: parseInt(id)},
+            {$set: json}
+        )
+        if(result.matchedCount === 0) return res.status(404).send('that tendero does not exist in the database');
+        // Res consult...
+        res.status(200).json({status:200,message:"Producto updated successfully :D"});
     } catch (error) {
         console.log(error);
         res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" });
