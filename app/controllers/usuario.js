@@ -69,9 +69,10 @@ export const deleteUsuario = async (req, res) => {
         // Capture 'id' from req.query
         const {id} = req.query
         
-        await usuario.deleteOne(
+        const result = await usuario.deleteOne(
             {id_usuario: parseInt(id)}
         )
+        if(result.deletedCount === 0) return res.status(404).send('that usuario does not exist in the database');
         res.status(200).json({status:200,message:'deleted successfully 🙃'});
     } catch (error) {
         res.status(404).json({status:404,message:"Couldn't delete that 'usuario'"})

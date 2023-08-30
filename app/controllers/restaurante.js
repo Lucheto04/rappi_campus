@@ -63,3 +63,20 @@ export const putRestaurante = async (req, res) => {
         res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" });
     }
 }
+
+export const deleteRestaurante = async (req, res) => {
+    try {
+        // Capture 'id' from req.query
+        const {id} = req.query
+        
+        const result = await restaurante.deleteOne(
+            {id_restauranteo: parseInt(id)}
+        )
+        if(result.deletedCount === 0) return res.status(404).send('that restaurant does not exist in the database');
+
+        res.status(200).json({status:200,message:'deleted successfully 🙃'});
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({status:404,message:"Couldn't delete that 'usuario'"})
+    }
+}
