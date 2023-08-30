@@ -31,5 +31,39 @@ const postDirecciones = async (req, res) => {
         res.status(500).json({satus:500,message:error});
     }
 }
+const putDirecciones = async (req, res) => {
+    //Validacion 
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) return res.status(422).send(errors);
 
-export { getAllDirecciones, postDirecciones }
+    try {
+        const id = req.params.id;
+        console.log(id);
+
+        //* Cambiar propiedades de fronted a backend 
+        let data = req.body;
+        
+        const dbNames = {
+            id_address: 'id_direccion',
+            id_user: 'usuario_id',
+            address:'direccion'
+        }
+        let json = {}
+        //Cambia las propiedades manejadas por el usuario a las establecidas en la base de datos 
+        for (const [fronted, backend] of Object.entries(dbNames)) {
+            json[backend] = data[fronted];
+        }
+        console.log({ id_direccion: Number(id) }, { $set: json });
+        //Elimina valores en undefined del objeto
+        for (const clave in json) {
+            if (json[clave] === undefined) {
+                delete json[clave];
+            }
+        }
+        await direcciones.updateOne({ id_direccion:Number(id)},{$set:json})
+        res.status(200).json({status:200,message:'Direccion updated successfully :D'})
+    } catch (error) {
+        res.send(error)
+    }
+}
+export { getAllDirecciones, postDirecciones, putDirecciones }
