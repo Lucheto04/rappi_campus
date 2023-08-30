@@ -1,7 +1,7 @@
 import { collectionGen } from "../../config/connection/atlas.js";
 import { siguienteId } from '../helpers/siguienteId.js'
 import { validationResult } from "express-validator"; 
-const restaurante = await collectionGen('restaurantes')
+const restaurante = await collectionGen('restaurantes');
 
 export const getRestaurante = async (req, res) => {
     try {
