@@ -42,6 +42,7 @@ export const postUsuarios = async (req, res,) => {
 
 export const putUsuarios = async (req, res) => {
     try {
+        // Capture 'id' from req.query
         const {id} = req.query
 
         // change of variables
@@ -59,5 +60,19 @@ export const putUsuarios = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" });
+    }
+}
+
+export const deleteUsuario = async (req, res) => {
+    try {
+        // Capture 'id' from req.query
+        const {id} = req.query
+        
+        await usuario.deleteOne(
+            {id_usuario: parseInt(id)}
+        )
+        res.status(200).json({status:200,message:'deleted successfully 🙃'});
+    } catch (error) {
+        res.status(404).json({status:404,message:"Couldn't delete that 'usuario'"})
     }
 }
