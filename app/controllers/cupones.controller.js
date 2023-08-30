@@ -5,7 +5,20 @@ import { siguienteId } from "../helpers/siguienteId.js";
 const cupones = await collectionGen('cupones') 
 
 const getAllCupones = async (req,res) => {
-    const result = await cupones.find().toArray();
+    const result = await cupones.aggregate([
+        {
+            $project: {
+                _id: 0,
+                identification: '$_id',
+                id_cupon: '$id_cupon',
+                cupon: '$cupon',
+                expiration: '$expiracion',
+                discount: '$descuento',
+                validation: '$valido',
+                id_userConsumer: '$id_usuario_utiliza'
+            }
+        }
+    ]).toArray();
     res.send(result);
 }
 const postCupones = async (req, res) => {
