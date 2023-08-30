@@ -55,7 +55,6 @@ export const putRestaurante = async (req, res) => {
             {id_restaurante: parseInt(id)},
             {$set: json}
         )
-        console.log(result);
         if(result.matchedCount === 0) return res.status(404).send('that restaurant does not exist in the database');
         // Res consult...
         res.status(200).json({status:200,message:"Restaurante updated successfully :D"});
