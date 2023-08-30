@@ -1,12 +1,12 @@
 import { check } from "express-validator";
 
 let trainer = {
-    entidad1: "nombre_usuario",
-    entidad2: "nombre_completo",
-    entidad3: "email",
-    entidad4: "password",
-    entidad5: "movil",
-    entidad6: "rol"
+    entidad1: "usuario",
+    entidad2: "nombre",
+    entidad3: "correo",
+    entidad4: "contraseña",
+    entidad5: "telefono",
+    entidad6: "nivel"
 }
 let {entidad1: u1, entidad2: u2, entidad3: u3, entidad4: u4, entidad5: u5, entidad6: u6} = trainer
 
