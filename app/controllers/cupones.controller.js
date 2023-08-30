@@ -8,8 +8,6 @@ const getAllCupones = async (req,res) => {
     const result = await cupones.aggregate([
         {
             $project: {
-                _id: 0,
-                identification: '$_id',
                 id_cupon: '$id_cupon',
                 cupon: '$cupon',
                 expiration: '$expiracion',
@@ -52,7 +50,7 @@ const putCupones = async (req, res) => {
     if (!errors.isEmpty()) return res.status(422).send(errors);
     try {
         const id = req.params.id
-        
+
         //*Cambiar nombres de fronted a backend
         let data = req.body;
         const dbNames = {
@@ -87,4 +85,15 @@ const putCupones = async (req, res) => {
         res.send(error)
     }
 }
-export{getAllCupones,postCupones,putCupones}
+const deleteCupones = async (req, res) => {
+    try {
+        const id = req.params.id
+
+        const result = await cupones.deleteOne({id_cupon:Number(id)})
+        if (result.deletedCount === 0) return res.status(404).send({status:404,message:'that producto does not exist in the database 😢'});
+        res.status(200).json({status:200,message:'sucessfully deleted :D'})
+    } catch (error) {
+        res.send(error)
+    }
+}
+export{getAllCupones,postCupones,putCupones,deleteCupones}
