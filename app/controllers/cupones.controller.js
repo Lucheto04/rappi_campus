@@ -80,7 +80,8 @@ const putCupones = async (req, res) => {
             json.expiracion = date;
         }
         console.log(json);
-        await cupones.updateOne({id_cupon:Number(id)},{$set:json})
+        const result = await cupones.updateOne({id_cupon:Number(id)},{$set:json})
+        if (result.matchedCount === 0) return res.status(404).send({status:404,message:'that producto does not exist in the database 😢'});
         res.status(200).json({status:200,message:'sucessfully updated :D'})
     } catch (error) {
         res.send(error)
