@@ -6,7 +6,7 @@ export async function siguienteId(coleccionName) {
     let countersCollection = db.collection('counters');
 
     const sequenceDocument = await countersCollection.findOneAndUpdate(
-        { counter: `${coleccionName}Id` },
+        { id: `${coleccionName}Id` },
         { $inc: { sequence_value: 1 } },
         { returnDocument: "after" }
     );
