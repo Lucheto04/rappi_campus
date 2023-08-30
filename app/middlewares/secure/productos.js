@@ -1,12 +1,4 @@
 import { body } from "express-validator";
-// {
-//     "_id": "64eeb14b586f9929fd87f601",
-//     "id_producto": 1,
-//     "nombre_producto": "Pizaa",
-//     "restaurante_id": 1,
-//     "descripcion": "Pizza super hipermega buena, de la Tienda el pancho, una porción de lo que necesitas",
-//     "precio": 8000
-//   }
 
 let producto = {
     entidad1: "name",
