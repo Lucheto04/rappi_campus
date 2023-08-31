@@ -9,5 +9,5 @@ export const pedidosDTO = [
         .isArray().withMessage('products debe ser un array'),
     body('address')
         .notEmpty().withMessage('address es obligatorio')
-        .isString().withMessage('address debe ser de tipo string')
+        .isNumeric().withMessage('address debe ser de tipo numérico')
 ]
