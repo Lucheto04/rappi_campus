@@ -51,5 +51,17 @@ const putPedidos = async (req, res) => {
         res.status(500).send({status:500,message:error.message});
     }
 }
+const deletePedidos = async (req, res) => {
+    //Validacion 
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) return res.status(422).send(errors);
+    try {
 
-export {getAllPedidos, postPedidos, putPedidos}
+        const result = await pedidos.deleteOne({ id_pedido: Number(req.params.id) })
+        if (result.deleteCount === 0) return result.status(404).json({ status: 404, message: 'That pedido does not exist' });
+        res.send({ status: 200, message:'pedido was successfully deleted'})
+    } catch (error) {
+        res.status(500).send({ status: 500, message: error.message });
+    }
+}
+export { getAllPedidos, postPedidos, putPedidos, deletePedidos }
