@@ -30,10 +30,26 @@ const postPedidos = async (req, res) => {
         const idPedido = await siguienteId('pedidos')
         const Data = chekData(dbProperties, req.body)
         await pedidos.insertOne({ id_pedido:idPedido,...Data})
-        console.log(Data);
         res.status(201).json({status:201,message:'Pedido was added successfully :D'})
     } catch (error) {
         res.send(error);
     }
 }
-export {getAllPedidos, postPedidos}
+const putPedidos = async (req, res) => {
+    //Validacion 
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) return res.status(422).send(errors);
+    try {
+        const data = chekData(dbProperties, req.body)
+        console.log(data);
+        const result = await pedidos.updateOne({ id_pedido: Number(req.params.id) }, { $set: data })
+        // Validacion del parametro
+        if (result.matchedCount === 0) return res.status(400).json({ status:400,message:'id was not sent, please check the readme for more information'})
+
+        res.status(200).json({status:200,message:'pedidos updated successfully 😁👍'})
+    } catch (error) {
+        res.status(500).send({status:500,message:error.message});
+    }
+}
+
+export {getAllPedidos, postPedidos, putPedidos}
