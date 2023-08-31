@@ -66,4 +66,15 @@ const putDirecciones = async (req, res) => {
         res.send(error)
     }
 }
-export { getAllDirecciones, postDirecciones, putDirecciones }
+const deleteDirecciones = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        const result = await direcciones.deleteOne({ id_direccion: id })
+        if(result.deleteCount === 0) return result.status(404).json({status:404,message:'That direccion does not exist'})
+        res.status(200).json({status:200,message:'That direccion was successfully deleted'})
+    } catch (error) {
+        res.send(error)
+    }
+}
+export { getAllDirecciones, postDirecciones, putDirecciones, deleteDirecciones }
