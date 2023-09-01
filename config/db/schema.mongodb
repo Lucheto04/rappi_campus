@@ -545,13 +545,21 @@ db.createCollection("pedidos", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_pedido', 'id_restaurante', 'productos', 'direccion'],
+            required: ['id_pedido', 'id_usuario', 'id_restaurante', 'id_tendero', 'productos', 'direccion'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
                 },
                 id_pedido: {
                     bsonType: 'int'
+                },
+                id_tendero: {
+                    bsonType: 'int',
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
+                },
+                id_usuario: {
+                    bsonType: 'int',
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
                 },
                 id_restaurante: {
                     bsonType: 'int',
@@ -566,7 +574,7 @@ db.createCollection("pedidos", {
                     }
                 },
                 direccion: {
-                    bsonType: 'int',
+                    bsonType: 'int || string',
                     description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
                 }
             }
@@ -698,4 +706,8 @@ db.restaurantes.aggregate([
     }
 ]);
 
-  
+// Busqueda de pedidos por id_usuario
+use("db_rappi_campus");
+db.pedidos.find(
+
+);
