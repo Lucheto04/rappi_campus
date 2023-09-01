@@ -9,7 +9,6 @@ db.counters.insertMany([
     { id: "direccionesId", sequence_value: 0 },
     { id: "pedidosId", sequence_value: 0 },
 ]);
-
 function nextID(coleccion) {
     const sequenceDocument = db.counters.findOneAndUpdate(
         { id: `${coleccion}Id` },
@@ -17,8 +16,7 @@ function nextID(coleccion) {
         { returnDocument: "after" }
     );
     return sequenceDocument.sequence_value;
-}
-;
+};
 db.createCollection("usuarios", {
     capped: true,
     size: 5000,
@@ -136,7 +134,7 @@ db.usuarios.insertMany([
         movil: "+573128754917",
         rol: 2
     }
-])
+]);
 db.createCollection("productos", {
     capped: true,
     size: 5000,
@@ -297,7 +295,6 @@ db.rappi_tendero.insertMany([
         movil:"+573169532612"
     }
 ]);
-
 db.createCollection("restaurantes", {
     capped: true,
     size: 5000,
@@ -469,7 +466,7 @@ db.cupones.insertMany([
         descuento: 5,
         valido: true
     }
-])
+]);
 db.createCollection("direcciones", {
     capped: true,
     size: 5000,
@@ -638,3 +635,11 @@ db.pedidos.insertMany([
         direccion: 3
     }
 ]);
+
+// Encrontrar restaurante por nombre
+use("db_rappi_campus");
+db.restaurantes.findOne(
+    {
+        nombre: "Tienda Don Pancho"
+    }
+)
