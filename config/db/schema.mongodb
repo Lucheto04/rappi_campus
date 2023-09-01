@@ -641,5 +641,61 @@ use("db_rappi_campus");
 db.restaurantes.findOne(
     {
         nombre: "Tienda Don Pancho"
+    },
+    {
+       _id: 0
     }
 )
+
+// Buscar restaurantes por calificacion
+use("db_rappi_campus");
+db.restaurantes.find(
+    {
+        calificacion: {$eq: 4}
+    },
+    {
+        _id: 0,
+        Name: '$nombre',
+        Address: '$direccion',
+        Qualification: '$calificacion'
+    }
+)
+
+// Busqueda de los restaurantes con todos sus productos
+use("db_rappi_campus");
+db.restaurantes.aggregate([
+    {
+        $lookup: {
+            from: "productos",
+            localField: "id_restaurante",
+            foreignField: "restaurante_id",
+            as: "Menu"
+        }
+    },
+    {
+        $match: {
+            Menu: { $ne: [] }
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            Name: "$nombre",
+            Address: "$direccion",
+            Qualification: "$calificacion",
+            Menu: {
+                $map: {
+                    input: "$Menu",
+                    as: "item",
+                    in: {
+                        Name_: "$$item.nombre_producto",
+                        Description: "$$item.descripcion",
+                        Price: "$$item.precio"
+                    }
+                }
+            }
+        }
+    }
+]);
+
+  
