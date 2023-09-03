@@ -24,10 +24,15 @@ appRestaurante.get('/:qualification', version({
     "2.0.0": restaurantByQualification
 }));
 
-
-appRestaurante.post('/', postRestauranteDto, postRestaurante);
-appRestaurante.put('/', postRestauranteDto, putRestaurante);
-appRestaurante.delete('/', deleteRestaurante);
+appRestaurante.post('/', postRestauranteDto, version({
+    "1.0.0": postRestaurante
+}));
+appRestaurante.put('/', postRestauranteDto, version({
+    "1.0.0": putRestaurante
+}));
+appRestaurante.delete('/', version({
+    "1.0.0": deleteRestaurante
+}));
 
 
 export default appRestaurante;
