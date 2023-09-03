@@ -791,6 +791,68 @@ db.restaurantes.aggregate([
 
 // 4. Busqueda de pedidos por id_usuario
 use("db_rappi_campus");
-db.pedidos.find(
-
-);
+db.pedidos.aggregate([
+    {
+        $match: {
+            id_usuario: 1 // Reemplaza 1 con el ID de usuario que deseas buscar
+        }
+    },
+    {
+        $lookup: {
+            from: "productos",
+            localField: "productos",
+            foreignField: "id_producto",
+            as: "detalle_productos"
+        }
+    },
+    {
+        $lookup: {
+            from: "restaurantes",
+            localField: "id_restaurante",
+            foreignField: "id_restaurante",
+            as: "info_restaurante"
+        }
+    },
+    {
+        $lookup: {
+            from: "rappi_tendero",
+            localField: "id_tendero",
+            foreignField: "id_tendero",
+            as: "info_tendero"
+        }
+    },
+    {
+        $lookup: {
+            from: "direcciones",
+            localField: "direccion",
+            foreignField: "id_direccion",
+            as: "info_direccion"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            Pedido: "$id_pedido",
+            Restaurante: {
+                $arrayElemAt: ["$info_restaurante.nombre", 0]
+            },
+            Tendero: {
+                $arrayElemAt: ["$info_tendero.nombre_completo", 0]
+            },
+            Direccion: {
+                $arrayElemAt: ["$info_direccion.direccion", 0]
+            },
+            Productos: {
+                $map: {
+                    input: "$detalle_productos",
+                    as: "producto",
+                    in: {
+                        Nombre: "$$producto.nombre_producto",
+                        Descripcion: "$$producto.descripcion",
+                        Precio: "$$producto.precio"
+                    }
+                }
+            }
+        }
+    }
+]);
