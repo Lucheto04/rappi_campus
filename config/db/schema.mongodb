@@ -537,6 +537,15 @@ db.direcciones.insertMany([
         direccion: "Calle 20 # 12-34, Villavicencio, Meta",
     },
 ]);
+function nextID(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
+use("db_rappi_campus");
 db.createCollection("pedidos", {
     capped: true,
     size: 5000,
@@ -574,7 +583,7 @@ db.createCollection("pedidos", {
                     }
                 },
                 direccion: {
-                    bsonType: 'int || string',
+                    bsonType: 'int',
                     description: `El parametro direccion es obligatorio y debe ser un string o un numero entero (int).`
                 }
             }
@@ -585,66 +594,86 @@ db.pedidos.insertMany([
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 1,
+        id_tendero: 4,
+        id_usuario: 2,
         productos: [1],
         direccion:2
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 1,
+        id_tendero: 3,
+        id_usuario: 1,
         productos: [1,2],
         direccion: 1
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 2,
+        id_usuario: 4,
         productos: [3, 4],
         direccion: 3
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 1,
+        id_usuario: 3,
         productos: [4, 4],
         direccion: 4
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 3,
+        id_tendero: 4,
+        id_usuario: 4,
         productos: [5, 5],
         direccion: 5
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 3,
+        id_tendero: 3,
+        id_usuario: 3,
         productos: [6],
         direccion: 6
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 2,
+        id_usuario: 2,
         productos: [3],
         direccion: 7
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 1,
+        id_usuario: 1,
         productos: [3, 3],
         direccion: 8
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 4,
+        id_tendero: 1,
+        id_usuario: 4,
         productos: [8,8,8,8],
         direccion: 3
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 4,
+        id_tendero: 2,
+        id_usuario: 3,
         productos: [8, 8, 7],
         direccion: 3
     }
 ]);
 
-// Encrontrar restaurante por nombre
+// 1. Encrontrar restaurante por nombre
 use("db_rappi_campus");
 db.restaurantes.findOne(
     {
@@ -655,7 +684,7 @@ db.restaurantes.findOne(
     }
 )
 
-// Buscar restaurantes por calificacion
+// 2. Buscar restaurantes por calificacion
 use("db_rappi_campus");
 db.restaurantes.find(
     {
@@ -669,7 +698,7 @@ db.restaurantes.find(
     }
 )
 
-// Busqueda de los restaurantes con todos sus productos
+// 3. Busqueda de los restaurantes con todos sus productos
 use("db_rappi_campus");
 db.restaurantes.aggregate([
     {
@@ -706,7 +735,7 @@ db.restaurantes.aggregate([
     }
 ]);
 
-// Busqueda de pedidos por id_usuario
+// 4. Busqueda de pedidos por id_usuario
 use("db_rappi_campus");
 db.pedidos.find(
 
