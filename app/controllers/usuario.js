@@ -4,6 +4,8 @@ import { validationResult } from "express-validator";
 const usuario = await collectionGen('usuarios');
 
 export const getUsuarios = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const result = await usuario.find().toArray();
         res.status(200).json(result)
@@ -14,6 +16,8 @@ export const getUsuarios = async (req, res) => {
 }
 
 export const postUsuarios = async (req, res,) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = await siguienteId('usuarios');
 
@@ -41,6 +45,8 @@ export const postUsuarios = async (req, res,) => {
 }
 
 export const putUsuarios = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
@@ -65,6 +71,8 @@ export const putUsuarios = async (req, res) => {
 }
 
 export const deleteUsuario = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
