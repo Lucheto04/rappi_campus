@@ -4,6 +4,8 @@ import { validationResult } from "express-validator";
 const restaurante = await collectionGen('restaurantes');
 
 export const getRestaurante = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const result = await restaurante.find().toArray();
         res.status(200).json(result)
@@ -15,6 +17,8 @@ export const getRestaurante = async (req, res) => {
 
 
 export const postRestaurante = async (req, res,) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = await siguienteId('restaurantes');
 
@@ -42,6 +46,8 @@ export const postRestaurante = async (req, res,) => {
 }
 
 export const putRestaurante = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
@@ -65,6 +71,8 @@ export const putRestaurante = async (req, res) => {
 }
 
 export const deleteRestaurante = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
