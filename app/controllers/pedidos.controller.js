@@ -6,6 +6,8 @@ import {chekData } from '../helpers/checkData.js';
 const pedidos = await collectionGen('pedidos');
 const dbProperties = {
     id_restaurant: 'id_restaurante',
+    id_seller: 'id_tendero',
+    id_user: 'id_usuario',
     products: 'productos',
     address: 'direccion'
 }
@@ -16,8 +18,11 @@ const getAllPedidos = async (req, res) => {
     res.send(await pedidos.aggregate([
         {
             $project: {
+                _id: 0,
                 id_order: '$id_pedido',
                 id_restaurant: '$id_restaurante',
+                id_seller: '$id_tendero',
+                id_user: '$id_usuario',
                 products: '$productos',
                 address: '$direccion'
             }
@@ -33,6 +38,7 @@ const postPedidos = async (req, res) => {
     try {
         const idPedido = await siguienteId('pedidos')
         const Data = chekData(dbProperties, req.body)
+        console.log(Data);
         await pedidos.insertOne({ id_pedido:idPedido,...Data})
         res.status(201).json({status:201,message:'Pedido was added successfully :D'})
     } catch (error) {
