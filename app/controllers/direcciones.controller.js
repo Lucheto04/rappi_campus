@@ -5,6 +5,8 @@ const direcciones = await collectionGen('direcciones');
 
 const getAllDirecciones = async function (req, res) {
     try {
+        //Rate limit
+        console.log(req.rateLimit);
         const result = await direcciones.aggregate([
             {
                 $project: {
@@ -20,9 +22,12 @@ const getAllDirecciones = async function (req, res) {
     }
 }
 const postDirecciones = async (req, res) => {
+    
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const idDirecc = await siguienteId('direcciones')
         await direcciones.insertOne({ id_direccion: idDirecc, ...req.body });
@@ -35,7 +40,8 @@ const putDirecciones = async (req, res) => {
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
-
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = req.params.id;
         console.log(id);
@@ -67,6 +73,8 @@ const putDirecciones = async (req, res) => {
     }
 }
 const deleteDirecciones = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const { id } = req.body;
 
