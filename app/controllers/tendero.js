@@ -4,6 +4,8 @@ import { validationResult } from "express-validator";
 const tendero = await collectionGen('rappi_tendero');
 
 export const getTendero = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const result = await tendero.find().toArray();
         res.status(200).json(result)
@@ -14,6 +16,8 @@ export const getTendero = async (req, res) => {
 }
 
 export const postTendero = async (req, res,) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = await siguienteId('rappi_tendero');
 
@@ -41,6 +45,8 @@ export const postTendero = async (req, res,) => {
 }
 
 export const putTendero = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
@@ -64,6 +70,8 @@ export const putTendero = async (req, res) => {
 }
 
 export const deleteTendero = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query

@@ -4,22 +4,32 @@ import { siguienteId } from "../helpers/siguienteId.js";
 
 const cupones = await collectionGen('cupones') 
 
-const getAllCupones = async (req,res) => {
-    const result = await cupones.aggregate([
-        {
-            $project: {
-                id_cupon: '$id_cupon',
-                cupon: '$cupon',
-                expiration: '$expiracion',
-                discount: '$descuento',
-                validation: '$valido',
-                id_userConsumer: '$id_usuario_utiliza'
+const getAllCupones = async (req, res) => {
+    try {
+        //Rate limit
+        console.log(req.rateLimit);
+
+        const result = await cupones.aggregate([
+            {
+                $project: {
+                    id_cupon: '$id_cupon',
+                    cupon: '$cupon',
+                    expiration: '$expiracion',
+                    discount: '$descuento',
+                    validation: '$valido',
+                    id_userConsumer: '$id_usuario_utiliza'
+                }
             }
-        }
-    ]).toArray();
-    res.send(result);
+        ]).toArray();
+        res.send(result);
+    } catch (error) {
+        console.log(error);
+        res.send(error.message)
+    }
 }
 const postCupones = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
@@ -45,6 +55,8 @@ const postCupones = async (req, res) => {
 
 }
 const putCupones = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
@@ -86,6 +98,8 @@ const putCupones = async (req, res) => {
     }
 }
 const deleteCupones = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = req.params.id
 

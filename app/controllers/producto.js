@@ -4,6 +4,8 @@ import { validationResult } from "express-validator";
 const producto = await collectionGen('productos');
 
 export const getProductos = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const result = await producto.find().toArray();
         res.status(200).json(result)
@@ -14,6 +16,8 @@ export const getProductos = async (req, res) => {
 }
 
 export const postProducto = async (req, res,) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const id = await siguienteId('productos');
 
@@ -41,6 +45,8 @@ export const postProducto = async (req, res,) => {
 }
 
 export const putProducto = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
@@ -64,6 +70,8 @@ export const putProducto = async (req, res) => {
 }
 
 export const deleteProducto = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         // Capture 'id' from req.query
         const {id} = req.query
