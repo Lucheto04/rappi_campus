@@ -537,15 +537,6 @@ db.direcciones.insertMany([
         direccion: "Calle 20 # 12-34, Villavicencio, Meta",
     },
 ]);
-function nextID(coleccion) {
-    const sequenceDocument = db.counters.findOneAndUpdate(
-        { id: `${coleccion}Id` },
-        { $inc: { sequence_value: 1 } },
-        { returnDocument: "after" }
-    );
-    return sequenceDocument.sequence_value;
-};
-use("db_rappi_campus");
 db.createCollection("pedidos", {
     capped: true,
     size: 5000,
@@ -672,6 +663,69 @@ db.pedidos.insertMany([
         direccion: 3
     }
 ]);
+db.createCollection('roles', {
+    capped: true,
+    size: 5000,
+    max: 15,
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            additionalProperties: false,
+            required: ['_id', 'nombre', 'permisos'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId'
+                },
+                nombre: {
+                    bsonType: 'string',
+                    description: "El nombre debe ser de tipo string"
+                },
+                permisos: {
+                    bsonType: 'object',
+                    description: 'Los permisos deben ser un objeto',
+                    properties: {
+                        additionalProperties: {
+                            bsonType: 'array',
+                            description: 'La propiedad "/cupones" debe ser un array'
+                        }
+                    }
+                }
+            }
+        }
+    }
+});
+use("db_rappi_campus");
+db.roles.insertMany([
+    {
+        nombre: 'admin',
+        permisos: {
+            "/cupones": ['1.0.0', '2.0.0'],
+            "/direcciones": ['1.0.0', '2.0.0'],
+            "/pedidos": ['1.0.0', '2.0.0'],
+            "/productos": ['1.0.0', '2.0.0'],
+            "/restaurantes": ['1.0.0', '2.0.0'],
+            "/tenderos": ['1.0.0', '2.0.0'],
+            "/usuarios": ['1.0.0', '2.0.0']
+        }
+    },
+    {
+        nombre: 'usuario',
+        permisos: {
+            "/cupones": ['1.0.0', '2.0.0'],
+            "/productos": ['1.0.0', '2.0.0'],
+            "/restaurantes": ['1.0.0', '2.0.0']
+        }
+    },
+    {
+        nombre: 'rappiTendero',
+        permisos: {
+            "/restaurantes": ['1.0.0', '2.0.0'],
+            "/pedidos": ['1.0.0', '2.0.0'],
+            "/productos": ['1.0.0', '2.0.0']
+        }
+    }
+]);
+
 
 // 1. Encrontrar restaurante por nombre
 use("db_rappi_campus");

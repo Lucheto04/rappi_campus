@@ -10,7 +10,9 @@ const dbProperties = {
     address: 'direccion'
 }
 
-const getAllPedidos = async(req,res) => {
+const getAllPedidos = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
     res.send(await pedidos.aggregate([
         {
             $project: {
@@ -26,6 +28,8 @@ const postPedidos = async (req, res) => {
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const idPedido = await siguienteId('pedidos')
         const Data = chekData(dbProperties, req.body)
@@ -39,6 +43,8 @@ const putPedidos = async (req, res) => {
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
+    //Rate limit
+    console.log(req.rateLimit);
     try {
         const data = chekData(dbProperties, req.body)
         console.log(data);
@@ -55,6 +61,8 @@ const deletePedidos = async (req, res) => {
     //Validacion 
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(422).send(errors);
+    //Rate limit
+    console.log(req.rateLimit);
     try {
 
         const result = await pedidos.deleteOne({ id_pedido: Number(req.params.id) })
