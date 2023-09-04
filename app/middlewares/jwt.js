@@ -33,7 +33,7 @@ export const crearToken = async (req, res) => {
             .setIssuedAt()
             .setExpirationTime('1h')
             .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-        res.send(jwt)
+        res.status(200).json({status:200,message:jwt})
     } catch (error) {
         res.status(404).json({status:404,message:error.message})
     }
