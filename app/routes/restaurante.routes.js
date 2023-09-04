@@ -15,7 +15,7 @@ appRestaurante.get('/', version({
 }));
 
 // Busqueda de restaurantes con todos sus productos de la V2.
-appRestaurante.get('/products', version({
+appRestaurante.get('/productos', version({
     "2.0.0": restaurantWithProducts
 }));
 
