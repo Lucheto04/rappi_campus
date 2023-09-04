@@ -3,7 +3,7 @@ import { getRestaurante, postRestaurante, putRestaurante, deleteRestaurante } fr
 import { postRestauranteDto } from "../middlewares/secure/restaurantes.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
-import { restaurantByName, restaurantByQualification, restaurantWithProducts } from "../versions/V2/restaurantes.js";
+import { restaurantByName, restaurantByQualification, restaurantWithProducts, badVersion } from "../versions/V2/restaurantes.js";
 import { verifyToken } from "../middlewares/jwt.js";
 const appRestaurante = Router();
 const version = routesVersioning();
@@ -17,11 +17,13 @@ appRestaurante.get('/', version({
 
 // Busqueda de restaurantes con todos sus productos de la V2.
 appRestaurante.get('/productos', version({
+    "1.0.0": badVersion,
     "2.0.0": restaurantWithProducts
 }));
 
 // Busqueda de restaurantes por la calificacion dentro de los parametros de la V2.
 appRestaurante.get('/por/:qualification', version({
+    "1.0.0": badVersion,
     "2.0.0": restaurantByQualification
 }));
 

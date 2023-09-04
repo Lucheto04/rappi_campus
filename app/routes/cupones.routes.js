@@ -3,7 +3,7 @@ import {deleteCupones, getAllCupones, postCupones, putCupones} from '../controll
 import {cuponesDTO} from "../middlewares/secure/cupones.dto.js"
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
-import { validCupon, usedCupons } from "../versions/V2/cupones.js";
+import { validCupon, usedCupons, badVersion } from "../versions/V2/cupones.js";
 import { verifyToken } from "../middlewares/jwt.js";
 const appCupones = Router();
 const version = routesVersioning();
@@ -17,6 +17,7 @@ appCupones.get('/', version({
 
 // Busqueda de cupones ya usados por un usuario en especifico.
 appCupones.get('/por/:id', version({
+    "1.0.0": badVersion,
     "2.0.0": usedCupons
 }));
 

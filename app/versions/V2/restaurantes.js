@@ -93,3 +93,8 @@ export const restaurantWithProducts = async (req, res) => {
         res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" })
     }
 }
+
+
+export const badVersion = async (req, res) => {
+    res.status(401).send({ status: 400, message:'This consult is not allowed to this version 🖐️ 🤨'})
+}

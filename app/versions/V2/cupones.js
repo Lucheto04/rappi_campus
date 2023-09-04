@@ -84,3 +84,7 @@ export const usedCupons = async (req, res) => {
         res.send(error.message)
     }
 }
+
+export const badVersion = async (req, res) => {
+    res.status(401).send({ status: 400, message:'This consult is not allowed to this version 🖐️ 🤨'})
+}
