@@ -73,7 +73,7 @@ Para descargar las dependencias utilizadas en el proyecto vas utilizar el siguie
 npm install
 ```
 
-Una vez descargadas las dependencias para asegurarte de que todo quedo bien mas a arrancar el `nodemon` con el siguiente comando
+Una vez descargadas las dependencias para asegurarte de que todo quedo bien vas a arrancar el `nodemon` con el siguiente comando
 
 ```
 npm run dev
@@ -92,6 +92,104 @@ El archivo lo encuentras en la siguiente direccion `/config/connection/atlas.js`
 Ahora con la extension `MongoDB for VS Code` vas a conectarlo con Atlas.
 
 Ahora vas a ir al script de la base de datos que esta en `config/db/schema.mongodb` y lo vas a ejecutar todo el script.
+
+### Tokens
+
+Para manipular los endpoints siempre vas a tener que generar el token correspondiente, el enpoint para generar tokens es el siguiente.
+
+```
+http://127.10.10.10:5510/login
+```
+
+
+Tambien tienes que enviar por el body un email y contraseña de algun usuario existente en la base de datos, como por ejemplo
+
+
+```
+{
+  "email": "sebas23@gmail.com",
+  "password": "sebas23123"
+}
+```
+Ese token lo vas a pegar en los headers y vas a activar la opcion `Authorization`.
+
+para generar un token de admin tendrias que mandar el siguiente json.
+```
+{
+  "email": "admin@system.com",
+  "password": "admin123"
+}
+```
+Con el token de admin puedes manipular la informacion de todas las colecciones, con el de usuarios solo puedes consultar 4 colecciones.
+
+### Endpoints
+
+Aqui te voy a listar todos los endpoinst que tienes disponibles con su metodo, recuerda que solo con el token de admin puedes usarlos todos.
+
+#### CRUD
+
+Para manipular el CRUD de todas las colecciones tienes que primero seleccionar la version 1.0.0, eso lo pondras en los headers como el token pero esta vez activaras la opción `Accept-Version`.
+
+Los enpoints del CRUD son los siguientes, solo tienes que cambiar el metodo y ya.
+
+```
+http://127.10.10.10:5510/usuarios
+http://127.10.10.10:5510/restaurantes
+http://127.10.10.10:5510/productos
+http://127.10.10.10:5510/tenderos
+http://127.10.10.10:5510/cupones
+http://127.10.10.10:5510/direcciones
+http://127.10.10.10:5510/pedidos
+```
+
+#### Consultas especiales
+
+Para las consultas especiales tienes que habilitar la version 2.0.0.
+
+Este enpoint es de metodo `GET` y lo que devuelve son unicamente los cupones validos.
+```
+http://127.10.10.10:5510/cupones
+```
+
+Este enpoint es de metodo `GET` y lo que devuelve son los cupones usados por un usuario en especifico, se le debe pasar el id del usuario por el parametro 'id'.
+```
+http://127.10.10.10:5510/cupones/:id
+```
+
+Este enpoint es de metodo `GET` y lo que devuelve es la informacion del tendero que realizara un pedido en especifico, se busca por el id del pedido en el parametro 'id'.
+```
+http://127.10.10.10:5510/pedidos/tendero/:id
+``` 
+
+
+Este enpoint es de metodo `GET` y lo que devuelve es la informacion de los pedidos realizados por un usuario en especifico, el id de usuario se pasa en el parametro 'id'.
+```
+http://127.10.10.10:5510/pedidos/:id
+```
+
+Este enpoint es de metodo `GET`, pero tienes que pasarle por el body el nombre de un restaurante y te devolvera la informacion de ese restaurante en especifico.
+
+json de ejemplo.
+
+```
+{
+  "name": "Tienda Don Pancho"
+}
+```
+enpoint
+```
+http://127.10.10.10:5510/restaurantes
+```
+
+Este enpoint es de metodo `GET` y lo que devuelve son todos los restaurantes pero con la informacion de todos sus productos.
+```
+http://127.10.10.10:5510/restaurantes/productos
+```
+
+Este enpoint es de metodo `GET` y es para filtrar restaurantes por la calificacion, como por ejemplo, restaurantes con una calificacion de 4 estrellas.
+```
+http://127.10.10.10:5510/restaurantes/:qualification
+```
 
 
 
