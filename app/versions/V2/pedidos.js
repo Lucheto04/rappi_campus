@@ -73,7 +73,47 @@ export const pedidoByUser = async (req, res) => {
                 }
             }
         ]).toArray();
-        if(result.length === 0) return res.status(404).json({ status: 404, message: "A restaurant with that rating was not found." });
+        if(result.length === 0) return res.status(404).json({ status: 404, message: "That user does not have any order requests." });
+        res.status(200).json(result)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: 500, message: "Couldnt connect to the database :C" })
+    }
+}
+
+export const infoSeller = async (req, res) => {
+    //Rate limit
+    console.log(req.rateLimit);
+    try {
+        const {id} = req.params
+        if(!id) return res.status(404).json({ status: 404, message: "You did not send the data >:C" });
+        const result = await pedidos.aggregate([
+            {
+                $match: {
+                    id_pedido: parseInt(id)
+                }
+            },
+            {
+                $lookup: {
+                    from: "rappi_tendero",
+                    localField: "id_restaurante",
+                    foreignField: "id_tendero",
+                    as: "tendero_info"
+                }
+            },
+            {
+                $unwind: "$tendero_info"
+            },
+            {
+                $project: {
+                    _id: 0,
+                    tendero: "$tendero_info.nombre_completo",
+                    email: "$tendero_info.email",
+                    movil: "$tendero_info.movil"
+                }
+            }
+        ]).toArray();
+        if(result.length === 0) return res.status(404).json({ status: 404, message: "No information was found for that order in the database." });
         res.status(200).json(result)
     } catch (error) {
         console.log(error);
