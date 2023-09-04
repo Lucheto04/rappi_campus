@@ -1,10 +1,10 @@
 import { body } from "express-validator";
 
 export const direccionesDTO = [
-    body('id_user')
-        .notEmpty().withMessage('id_user es obligatorio')
-        .isNumeric().withMessage('id_user debe ser de tipo númerico'),
-    body('address')
-        .notEmpty().withMessage('address es obligatorio')
-        .isString().withMessage('address debe ser de tipo string')
+    body('usuario_id')
+        .notEmpty().withMessage('usuario_id es obligatorio')
+        .isNumeric().withMessage('usuario_id debe ser de tipo númerico'),
+    body('direccion')
+        .notEmpty().withMessage('direccion es obligatorio')
+        .isString().withMessage('direccion debe ser de tipo string')
 ]
