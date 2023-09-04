@@ -2,6 +2,8 @@ import { validationResult } from 'express-validator';
 import {conexion } from '../../config/connection/atlas.js';
 import { SignJWT, jwtVerify } from 'jose';
 import { ObjectId } from 'mongodb';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const db = await conexion();
 const encoder = new TextEncoder();
