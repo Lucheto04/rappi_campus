@@ -146,13 +146,13 @@ http://127.10.10.10:5510/pedidos
 #### POST
 
 ```
-http://127.10.10.10:5510/usuarios/:id
-http://127.10.10.10:5510/restaurantes/:id
-http://127.10.10.10:5510/productos/:id
-http://127.10.10.10:5510/tenderos/:id
-http://127.10.10.10:5510/cupones/:id
-http://127.10.10.10:5510/direcciones/:id
-http://127.10.10.10:5510/pedidos/:id
+http://127.10.10.10:5510/usuarios
+http://127.10.10.10:5510/restaurantes
+http://127.10.10.10:5510/productos
+http://127.10.10.10:5510/tenderos
+http://127.10.10.10:5510/cupones
+http://127.10.10.10:5510/direcciones
+http://127.10.10.10:5510/pedidos
 ```
 #### PUT
 
@@ -168,13 +168,13 @@ http://127.10.10.10:5510/pedidos/:id
 #### DELETE
 
 ```
-http://127.10.10.10:5510/usuarios
-http://127.10.10.10:5510/restaurantes
-http://127.10.10.10:5510/productos
-http://127.10.10.10:5510/tenderos
-http://127.10.10.10:5510/cupones
-http://127.10.10.10:5510/direcciones
-http://127.10.10.10:5510/pedidos
+http://127.10.10.10:5510/usuarios/:id
+http://127.10.10.10:5510/restaurantes/:id
+http://127.10.10.10:5510/productos/:id
+http://127.10.10.10:5510/tenderos/:id
+http://127.10.10.10:5510/cupones/:id
+http://127.10.10.10:5510/direcciones/:id
+http://127.10.10.10:5510/pedidos/:id
 ```
 ### Consultas especiales
 
