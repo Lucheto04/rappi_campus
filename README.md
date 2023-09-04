@@ -130,7 +130,9 @@ Aqui te voy a listar todos los endpoinst que tienes disponibles con su metodo, r
 
 Para manipular el CRUD de todas las colecciones tienes que primero seleccionar la version 1.0.0, eso lo pondras en los headers como el token pero esta vez activaras la opción `Accept-Version`.
 
-Los enpoints del CRUD son los siguientes, solo tienes que cambiar el metodo y ya.
+Los enpoints del CRUD son los siguientes.
+
+#### GET
 
 ```
 http://127.10.10.10:5510/usuarios
@@ -141,8 +143,40 @@ http://127.10.10.10:5510/cupones
 http://127.10.10.10:5510/direcciones
 http://127.10.10.10:5510/pedidos
 ```
+#### POST
 
-#### Consultas especiales
+```
+http://127.10.10.10:5510/usuarios/:id
+http://127.10.10.10:5510/restaurantes/:id
+http://127.10.10.10:5510/productos/:id
+http://127.10.10.10:5510/tenderos/:id
+http://127.10.10.10:5510/cupones/:id
+http://127.10.10.10:5510/direcciones/:id
+http://127.10.10.10:5510/pedidos/:id
+```
+#### PUT
+
+```
+http://127.10.10.10:5510/usuarios/:id
+http://127.10.10.10:5510/restaurantes/:id
+http://127.10.10.10:5510/productos/:id
+http://127.10.10.10:5510/tenderos/:id
+http://127.10.10.10:5510/cupones/:id
+http://127.10.10.10:5510/direcciones/:id
+http://127.10.10.10:5510/pedidos/:id
+```
+#### DELETE
+
+```
+http://127.10.10.10:5510/usuarios
+http://127.10.10.10:5510/restaurantes
+http://127.10.10.10:5510/productos
+http://127.10.10.10:5510/tenderos
+http://127.10.10.10:5510/cupones
+http://127.10.10.10:5510/direcciones
+http://127.10.10.10:5510/pedidos
+```
+### Consultas especiales
 
 Para las consultas especiales tienes que habilitar la version 2.0.0.
 
