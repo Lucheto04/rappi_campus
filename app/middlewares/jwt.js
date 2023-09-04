@@ -49,14 +49,16 @@ export const verifyToken = async (req, res,next) => {
         );
         //Encontrar los permisos
         const result = await db.collection('roles').findOne({ _id: new ObjectId(dataJWT.payload._id) });
-        console.log(result);
         
         //Comparación de endponts 
         if (!(req.baseUrl in result.permisos)) return res.status(401).json({ status: 401, message: 'The endpoint is not allowed :C' })
         //Comparación de versiones
         const versions = result.permisos[req.baseUrl];
-        if (!(versions.includes(req.headers["accept-version"]))) return res.status(401).json({ status: 401, message: 'The version is not allowed :C' })
-        
+        //Comprobar version
+        if (!(req.headers["accept-version"] in versions)) return res.status(401).json({ status: 401, message: 'The version is not allowed :C' })
+        //Comparación de métodos
+        const methods = versions[req.headers["accept-version"]]
+        if(!(methods.includes(req.method))) return res.status(401).json({ status: 401, message: 'The method is not allowed :C' });
         next()
     } catch (error) {
         res.status(400).json({ status: 400, message:'Unathorized 🖐️ 🤨'})
