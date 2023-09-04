@@ -6,7 +6,6 @@ import routesVersioning from "express-routes-versioning";
 import { validCupon, usedCupons } from "../versions/V2/cupones.js";
 import { verifyToken } from "../middlewares/jwt.js";
 const appCupones = Router();
-import routesVersioning from "express-routes-versioning";
 const version = routesVersioning();
 appCupones.use(verifyToken,limitReq())
 
