@@ -639,7 +639,6 @@ db.pedidos.insertMany([
     }
 ]);
 
-use("db_rappi_campus");
 db.createCollection('roles', {
     capped: true,
     size: 5000,
@@ -670,39 +669,6 @@ db.createCollection('roles', {
                     }
                 }
             }
-        }
-    }
-});
-db.roles.insertOne({
-    nombre: 'admin',
-    permisos: {
-        "/cupones": {
-            '1.0.0': ["POST", "GET", "PUT", "DELETE"],
-            '2.0.0': ["POST", "GET", "PUT", "DELETE"]
-        },
-        "/direcciones": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
-        },
-        "/pedidos": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
-        },
-        "/productos": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
-        },
-        "/restaurantes": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
-        },
-        "/tenderos": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
-        },
-        "/usuarios": {
-            '1.0.0': ["GET", "POST", "PUT", "DELETE"],
-            '2.0.0': ["GET", "POST", "PUT", "DELETE"]
         }
     }
 });
@@ -743,17 +709,56 @@ db.roles.insertMany([
     {
         nombre: 'usuario',
         permisos: {
-            "/cupones": ['1.0.0', '2.0.0'],
-            "/productos": ['1.0.0', '2.0.0'],
-            "/restaurantes": ['1.0.0', '2.0.0']
+            "/cupones": {
+                '1.0.0':["GET", "PUT", "DELETE"],
+                '2.0.0':["GET", "PUT", "DELETE"]
+            },
+            "/productos": {
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            },
+            "/restaurantes": {
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            },
+            "/direcciones":{
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            }
         }
     },
     {
         nombre: 'rappiTendero',
         permisos: {
-            "/restaurantes": ['1.0.0', '2.0.0'],
-            "/pedidos": ['1.0.0', '2.0.0'],
-            "/productos": ['1.0.0', '2.0.0']
+            "/restaurantes": {
+                '1.0.0':["GET"],        
+                '2.0.0':["GET"]
+            },
+            "/pedidos": {
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            },
+            "/productos": {
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            },
+            "/direcciones":{
+                '1.0.0':["GET"],
+                '2.0.0':["GET"]
+            }
+        }
+    },
+    {
+        nombre:"restaurante",
+        permisos:{
+            "/restaurantes": {
+                '1.0.0':["GET","PUT","POST"],        
+                '2.0.0':["GET","PUT","POST"]
+            },
+            "/productos": {
+                '1.0.0':["GET","POST","PUT"],
+                '2.0.0':["GET","POST","PUT"]
+            }
         }
     }
 ]);
