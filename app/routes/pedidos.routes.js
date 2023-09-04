@@ -11,11 +11,12 @@ appPedidos.use(limitReq());
 appPedidos.get('/', version({
     "1.0.0": getAllPedidos
 }));
+// Busqueda para obtener la informacion del tendero que realizara un pedido en especifico.
 appPedidos.get('/tendero/:id', version({
     "2.0.0": infoSeller
 }));
 
-// Busqueda de pedido por id_usuario
+// Busqueda de pedido por id_usuario.
 appPedidos.get('/:id', version({
     "2.0.0": pedidoByUser
 }));
