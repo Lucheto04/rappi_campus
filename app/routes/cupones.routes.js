@@ -16,7 +16,7 @@ appCupones.get('/', version({
 }));
 
 // Busqueda de cupones ya usados por un usuario en especifico.
-appCupones.get('/:id', version({
+appCupones.get('/por/:id', version({
     "2.0.0": usedCupons
 }));
 

@@ -21,7 +21,7 @@ appRestaurante.get('/productos', version({
 }));
 
 // Busqueda de restaurantes por la calificacion dentro de los parametros de la V2.
-appRestaurante.get('/:qualification', version({
+appRestaurante.get('/por/:qualification', version({
     "2.0.0": restaurantByQualification
 }));
 

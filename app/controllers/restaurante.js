@@ -76,9 +76,9 @@ export const deleteRestaurante = async (req, res) => {
     try {
         // Capture 'id' from req.params
         const {id} = req.params
-        
+        console.log(id);
         const result = await restaurante.deleteOne(
-            {id_restauranteo: parseInt(id)}
+            {id_restaurante: parseInt(id)}
         )
         if(result.deletedCount === 0) return res.status(404).send('that restaurant does not exist in the database');
 
