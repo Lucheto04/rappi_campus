@@ -11,8 +11,8 @@ appTendero.use(verifyToken,limitReq());
 
 appTendero.get('/', getTendero);
 appTendero.post('/', tenderoDto, postTendero);
-appTendero.put('/', tenderoDto, putTendero);
-appTendero.delete('/', deleteTendero);
+appTendero.put('/:id', tenderoDto, putTendero);
+appTendero.delete('/:id', deleteTendero);
 
 
 export default appTendero;

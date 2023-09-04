@@ -11,8 +11,8 @@ appProducto.use(verifyToken,limitReq());
 
 appProducto.get('/', getProductos);
 appProducto.post('/', productoDto, postProducto);
-appProducto.put('/', productoDto, putProducto);
-appProducto.delete('/', deleteProducto);
+appProducto.put('/:id', productoDto, putProducto);
+appProducto.delete('/:id', deleteProducto);
 
 
 export default appProducto;

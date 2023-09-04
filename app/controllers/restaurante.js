@@ -49,8 +49,8 @@ export const putRestaurante = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
 
         // change of variables
         const {name: nombre, address: direccion, qualification: calificacion } = req.body;
@@ -74,8 +74,8 @@ export const deleteRestaurante = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
         
         const result = await restaurante.deleteOne(
             {id_restauranteo: parseInt(id)}

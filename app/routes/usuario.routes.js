@@ -11,7 +11,7 @@ appUsuarios.use(verifyToken,limitReq());
 
 appUsuarios.get('/', getUsuarios);
 appUsuarios.post('/', postUsuarioDto, postUsuarios);
-appUsuarios.put('/', postUsuarioDto, putUsuarios);
-appUsuarios.delete('/', deleteUsuario);
+appUsuarios.put('/:id', postUsuarioDto, putUsuarios);
+appUsuarios.delete('/:id', deleteUsuario);
 
 export default appUsuarios;

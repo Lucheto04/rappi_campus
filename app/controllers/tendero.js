@@ -48,8 +48,8 @@ export const putTendero = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
 
         // change of variables
         const {name: nombre_completo, email_tendero: email, password_tendero: password, movil_number: movil } = req.body;
@@ -73,8 +73,8 @@ export const deleteTendero = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
         
         const result = await tendero.deleteOne(
             {id_tendero: parseInt(id)}

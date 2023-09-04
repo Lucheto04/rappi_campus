@@ -48,8 +48,8 @@ export const putProducto = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
 
         // change of variables
         const {name: nombre_producto, restaurant_id: restaurante_id, description: descripcion, price: precio } = req.body;
@@ -73,8 +73,8 @@ export const deleteProducto = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
         
         const result = await producto.deleteOne(
             {id_producto: parseInt(id)}
