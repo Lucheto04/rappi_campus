@@ -3,7 +3,7 @@ import { getUsuarios , postUsuarios, putUsuarios, deleteUsuario} from "../contro
 import { postUsuarioDto } from "../middlewares/secure/usuarios.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import { verifyToken } from "../middlewares/jwt.js";
-// import routesVersioning from "express-routes-versioning";
+import routesVersioning from "express-routes-versioning";
 
 const appUsuarios = Router();
 
