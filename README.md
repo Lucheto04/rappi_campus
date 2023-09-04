@@ -46,16 +46,52 @@ Ademas de eso Rappi tiene muchas otras funcionalidades tales como:
 El Marketplace es un sitio donde los productos son ofrecidos por los comerciantes para ser adquiridos por consumidores, es decir, un mercado en el mundo online. En él, varios comerciantes colocan sus productos a la venta en un sólo canal.
 
 
+## Instrucciones de uso
 
+#### Instalacion y uso de nvm
+Para usar este proyecto despues de descargarlo asegurate de estar usando la version `18.16.1` de `nvm`, para eso vas a mandar el siguiente comando en la terminal.
 
+```
+nvm install 18.16.1
+```
 
+Ahora vas a poner la version en uso con el siguiente comando.
 
+```
+nvm use 18.16.1
+```
 
+#### Variables de entorno
 
+Para las variables de entorno tienes el archivo `.env.example`, en ese archivo solo debes llenar los espacios vacios con los datos correspondientes y luego renombrar el archivo eliminando la parte `.example`, dejando unicamente el `.env`.
 
+#### Instalacion de dependencias
 
+Para descargar las dependencias utilizadas en el proyecto vas utilizar el siguiente comando.
 
+```
+npm install
+```
 
+Una vez descargadas las dependencias para asegurarte de que todo quedo bien mas a arrancar el `nodemon` con el siguiente comando
+
+```
+npm run dev
+``` 
+
+Si todo esta bien deberia darte la siguiente respuesta.
+
+<img src="./img/nodemon.jpg" style="zoom:45">
+
+#### Base de datos
+
+Para generar la base de datos primero debes entrar a mongoDB Atlas y copar el link de coneccion por string, y lo vas a pegar en el archivo `atlas.js`, cambiando las partes correspondientes por las variables de entorno.
+
+El archivo lo encuentras en la siguiente direccion `/config/connection/atlas.js`
+
+Ahora con la extension `MongoDB for VS Code` vas a conectarlo con Atlas.
+
+Ahora vas a ir al script de la base de datos que esta en `config/db/schema.mongodb` y lo vas a ejecutar todo el script.
 
 
 
