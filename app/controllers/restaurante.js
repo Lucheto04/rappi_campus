@@ -49,6 +49,9 @@ export const putRestaurante = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
+        //Validacion 
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) return res.status(422).send(errors);
         // Capture 'id' from req.params
         const {id} = req.params
 
