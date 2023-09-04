@@ -52,7 +52,7 @@ const putDirecciones = async (req, res) => {
         const dbNames = {
             id_address: 'id_direccion',
             id_user: 'usuario_id',
-            address:'direccion'
+            direccion:'direccion'
         }
         let json = {}
         //Cambia las propiedades manejadas por el usuario a las establecidas en la base de datos 
@@ -76,9 +76,9 @@ const deleteDirecciones = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
-        const result = await direcciones.deleteOne({ id_direccion: id })
+        const result = await direcciones.deleteOne({ id_direccion: parseInt(id) })
         if(result.deleteCount === 0) return result.status(404).json({status:404,message:'That direccion does not exist'})
         res.status(200).json({status:200,message:'That direccion was successfully deleted'})
     } catch (error) {
