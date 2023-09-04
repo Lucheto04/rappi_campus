@@ -3,7 +3,7 @@ import { deletePedidos, getAllPedidos, postPedidos, putPedidos } from "../contro
 import { pedidosDTO } from "../middlewares/secure/pedidos.dto.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
-import { pedidoByUser, infoSeller } from "../versions/V2/pedidos.js";
+import { pedidoByUser, infoSeller, badVersion } from "../versions/V2/pedidos.js";
 import { verifyToken } from "../middlewares/jwt.js";
 
 const appPedidos = Router();
@@ -16,11 +16,13 @@ appPedidos.get('/', version({
 
 // Busqueda para obtener la informacion del tendero que realizara un pedido en especifico.
 appPedidos.get('/tendero/:id', version({
+    "1.0.0": badVersion,
     "2.0.0": infoSeller
 }));
 
 // Busqueda de pedido por id_usuario.
 appPedidos.get('/:id', version({
+    "1.0.0": badVersion,
     "2.0.0": pedidoByUser
 }));
 
