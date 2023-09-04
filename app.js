@@ -7,6 +7,7 @@ import appTendero from './app/routes/tendero.routes.js';
 import appCupones from "./app/routes/cupones.routes.js";
 import appDirecciones from "./app/routes/direcciones.routes.js";
 import appPedidos from "./app/routes/pedidos.routes.js";
+import appLogin from './app/routes/login.routes.js';
 dotenv.config();
 
 const app = express();
@@ -19,6 +20,7 @@ app.use('/tenderos', appTendero);
 app.use('/cupones', appCupones);
 app.use('/direcciones', appDirecciones);
 app.use('/pedidos', appPedidos);
+app.use('/login', appLogin);
 
 const config = JSON.parse(process.env.MY_SERVER);
 app.listen(config, () => {
