@@ -9,7 +9,6 @@ db.counters.insertMany([
     { id: "direccionesId", sequence_value: 0 },
     { id: "pedidosId", sequence_value: 0 },
 ]);
-
 function nextID(coleccion) {
     const sequenceDocument = db.counters.findOneAndUpdate(
         { id: `${coleccion}Id` },
@@ -17,8 +16,7 @@ function nextID(coleccion) {
         { returnDocument: "after" }
     );
     return sequenceDocument.sequence_value;
-}
-;
+};
 db.createCollection("usuarios", {
     capped: true,
     size: 5000,
@@ -136,7 +134,7 @@ db.usuarios.insertMany([
         movil: "+573128754917",
         rol: 2
     }
-])
+]);
 db.createCollection("productos", {
     capped: true,
     size: 5000,
@@ -297,7 +295,6 @@ db.rappi_tendero.insertMany([
         movil:"+573169532612"
     }
 ]);
-
 db.createCollection("restaurantes", {
     capped: true,
     size: 5000,
@@ -469,7 +466,7 @@ db.cupones.insertMany([
         descuento: 5,
         valido: true
     }
-])
+]);
 db.createCollection("direcciones", {
     capped: true,
     size: 5000,
@@ -548,13 +545,21 @@ db.createCollection("pedidos", {
         $jsonSchema: {
         bsonType: 'object',
             additionalProperties: false,
-            required: ['_id', 'id_pedido', 'id_restaurante', 'productos', 'direccion'],
+            required: ['id_pedido', 'id_usuario', 'id_restaurante', 'id_tendero', 'productos', 'direccion'],
             properties: {
                 _id: {
                     bsonType: 'objectId'
                 },
                 id_pedido: {
                     bsonType: 'int'
+                },
+                id_tendero: {
+                    bsonType: 'int',
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
+                },
+                id_usuario: {
+                    bsonType: 'int',
+                    description: `El parametro id_restaurante es obligatorio y debe ser un numero entero (int).`
                 },
                 id_restaurante: {
                     bsonType: 'int',
@@ -580,60 +585,80 @@ db.pedidos.insertMany([
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 1,
+        id_tendero: 4,
+        id_usuario: 2,
         productos: [1],
         direccion:2
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 1,
+        id_tendero: 3,
+        id_usuario: 1,
         productos: [1,2],
         direccion: 1
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 2,
+        id_usuario: 4,
         productos: [3, 4],
         direccion: 3
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 1,
+        id_usuario: 3,
         productos: [4, 4],
         direccion: 4
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 3,
+        id_tendero: 4,
+        id_usuario: 4,
         productos: [5, 5],
         direccion: 5
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 3,
+        id_tendero: 3,
+        id_usuario: 3,
         productos: [6],
         direccion: 6
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 2,
+        id_usuario: 2,
         productos: [3],
         direccion: 7
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 2,
+        id_tendero: 1,
+        id_usuario: 1,
         productos: [3, 3],
         direccion: 8
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 4,
+        id_tendero: 1,
+        id_usuario: 4,
         productos: [8,8,8,8],
         direccion: 3
     },
     {
         id_pedido: Number(nextID('pedidos')),
         id_restaurante: 4,
+        id_tendero: 2,
+        id_usuario: 3,
         productos: [8, 8, 7],
         direccion: 3
     }
@@ -762,3 +787,5 @@ db.roles.insertMany([
         }
     }
 ]);
+
+
