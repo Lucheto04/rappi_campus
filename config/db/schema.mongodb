@@ -794,26 +794,6 @@ db.pedidos.aggregate([
     }
 ]);
 
-// 5. Busqueda de cupones validos.
-use("db_rappi_campus");
-db.cupones.aggregate([
-    {
-        $match: {
-            valido: true,
-            expiracion: { $gt: new Date() } // Cupones que no han expirado
-        }
-    },
-    {
-        $project: {
-            _id: 0,
-            id_cupon: 1,
-            cupon: 1,
-            expiracion: 1,
-            descuento: 1
-        }
-    }
-]);
-
 // 6. Busqueda de cupones ya utilizados por id_usuario
 use("db_rappi_campus");
 db.cupones.aggregate([
