@@ -4,10 +4,10 @@ import {cuponesDTO} from "../middlewares/secure/cupones.dto.js"
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
 import { validCupon, usedCupons } from "../versions/V2/cupones.js";
+import { verifyToken } from "../middlewares/jwt.js";
 const appCupones = Router();
 const version = routesVersioning();
-appCupones.use(limitReq());
-
+appCupones.use(verifyToken,limitReq())
 
 // Busquedas de cupones de la V1 y V2, en la V2 se filtra para conseguir solo los cupones validos.
 appCupones.get('/', version({

@@ -4,13 +4,16 @@ import { pedidosDTO } from "../middlewares/secure/pedidos.dto.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
 import { pedidoByUser, infoSeller } from "../versions/V2/pedidos.js";
+import { verifyToken } from "../middlewares/jwt.js";
+
 const appPedidos = Router();
 const version = routesVersioning();
-appPedidos.use(limitReq());
+appPedidos.use(verifyToken,limitReq());
 
 appPedidos.get('/', version({
     "1.0.0": getAllPedidos
 }));
+
 // Busqueda para obtener la informacion del tendero que realizara un pedido en especifico.
 appPedidos.get('/tendero/:id', version({
     "2.0.0": infoSeller
@@ -24,4 +27,5 @@ appPedidos.get('/:id', version({
 appPedidos.post('/', pedidosDTO, postPedidos);
 appPedidos.put('/:id', pedidosDTO, putPedidos);
 appPedidos.delete('/:id', pedidosDTO, deletePedidos);
+
 export default appPedidos;

@@ -4,9 +4,10 @@ import { postRestauranteDto } from "../middlewares/secure/restaurantes.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import routesVersioning from "express-routes-versioning";
 import { restaurantByName, restaurantByQualification, restaurantWithProducts } from "../versions/V2/restaurantes.js";
+import { verifyToken } from "../middlewares/jwt.js";
 const appRestaurante = Router();
 const version = routesVersioning();
-appRestaurante.use(limitReq());
+appRestaurante.use(verifyToken,limitReq());
 
 // Busquedas de restaurantes de la V1 y V2, en la V2 se filtra los restaurantes por nombre pasandolo en el 'body' de la consulta.
 appRestaurante.get('/', version({
