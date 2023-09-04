@@ -3,7 +3,7 @@ import { getTendero, postTendero, putTendero, deleteTendero } from "../controlle
 import { tenderoDto } from "../middlewares/secure/tenderos.js";
 import { limitReq } from "../middlewares/rateLimit.js";
 import { verifyToken } from "../middlewares/jwt.js";
-// import routesVersioning from "express-routes-versioning";
+import routesVersioning from "express-routes-versioning";
 
 const appTendero = Router();
 
@@ -11,8 +11,8 @@ appTendero.use(verifyToken,limitReq());
 
 appTendero.get('/', getTendero);
 appTendero.post('/', tenderoDto, postTendero);
-appTendero.put('/', tenderoDto, putTendero);
-appTendero.delete('/', deleteTendero);
+appTendero.put('/:id', tenderoDto, putTendero);
+appTendero.delete('/:id', deleteTendero);
 
 
 export default appTendero;

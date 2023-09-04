@@ -4,7 +4,7 @@ import {direccionesDTO} from '../middlewares/secure/direcciones.dto.js'
 import { limitReq } from "../middlewares/rateLimit.js";
 import { verifyToken } from "../middlewares/jwt.js";
 const appDirecciones = Router();
-
+import routesVersioning from "express-routes-versioning";
 appDirecciones.use(verifyToken,limitReq())
 
 appDirecciones.get('/', getAllDirecciones);

@@ -48,8 +48,8 @@ export const putUsuarios = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
 
         // change of variables
         const {user: nombre_usuario, name: nombre_completo, email_user: email, password_user: password, movil_number: movil, level:rol } = req.body
@@ -74,8 +74,8 @@ export const deleteUsuario = async (req, res) => {
     //Rate limit
     console.log(req.rateLimit);
     try {
-        // Capture 'id' from req.query
-        const {id} = req.query
+        // Capture 'id' from req.params
+        const {id} = req.params
         
         const result = await usuario.deleteOne(
             {id_usuario: parseInt(id)}

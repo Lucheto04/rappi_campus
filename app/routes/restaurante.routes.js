@@ -28,10 +28,10 @@ appRestaurante.get('/:qualification', version({
 appRestaurante.post('/', postRestauranteDto, version({
     "1.0.0": postRestaurante
 }));
-appRestaurante.put('/', postRestauranteDto, version({
+appRestaurante.put('/:id', postRestauranteDto, version({
     "1.0.0": putRestaurante
 }));
-appRestaurante.delete('/', version({
+appRestaurante.delete('/:id', version({
     "1.0.0": deleteRestaurante
 }));
 
