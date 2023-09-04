@@ -13,7 +13,7 @@ Rappi es una aplicación movil donde puedes ser o un usuario para realizar pedid
 
 ## Objetivo especifico
 
-Este proyecto tiene como objetivo simular la funcionalidad de la aplicación de rappi, enfocándose principalmente en la funcionalidad de pedidos que esta aplicación posee.Implementando a su paso conceptos vistos como **JSON Web Token**, **MongoDB**,**Express**, entre otros. Este proyecto permitirá (según los roles establecidos) acceder a los endpoints de cupones, direcciones,pedidos,productos,restaurantes, tenderos y usuarios. Más adelante estará la especificación para cada endpoint.
+Este proyecto tiene como objetivo simular la funcionalidad de la aplicación de rappi, enfocándose principalmente en la funcionalidad de pedidos que esta aplicación posee. Implementando a su paso conceptos vistos como **JSON Web Token**, **MongoDB**, **Express**, entre otros. Este proyecto permitirá (según los roles establecidos) acceder a los endpoints de cupones, direcciones, pedidos, productos, restaurantes,  tenderos y usuarios. Más adelante estará la especificación para cada endpoint.
 
 #### ¿Como funciona Rappi?
 
@@ -96,8 +96,9 @@ Ahora vas a ir al script de la base de datos que esta en `config/db/schema.mongo
 
 Para manipular los endpoints siempre vas a tener que generar el token correspondiente, el endpoint para generar tokens es el siguiente.
 
+Nota: *Para generar el token debes generar una consulta POST.*
 ```
-http://127.10.10.10:5510/login
+http://127.10.10.10:5010/login
 ```
 
 
@@ -134,46 +135,46 @@ Los enpoints del CRUD son los siguientes.
 #### GET
 
 ```
-http://127.10.10.10:5510/usuarios
-http://127.10.10.10:5510/restaurantes
-http://127.10.10.10:5510/productos
-http://127.10.10.10:5510/tenderos
-http://127.10.10.10:5510/cupones
-http://127.10.10.10:5510/direcciones
-http://127.10.10.10:5510/pedidos
+http://127.10.10.10:5010/usuarios
+http://127.10.10.10:5010/restaurantes
+http://127.10.10.10:5010/productos
+http://127.10.10.10:5010/tenderos
+http://127.10.10.10:5010/cupones
+http://127.10.10.10:5010/direcciones
+http://127.10.10.10:5010/pedidos
 ```
 #### POST
 
 ```
-http://127.10.10.10:5510/usuarios
-http://127.10.10.10:5510/restaurantes
-http://127.10.10.10:5510/productos
-http://127.10.10.10:5510/tenderos
-http://127.10.10.10:5510/cupones
-http://127.10.10.10:5510/direcciones
-http://127.10.10.10:5510/pedidos
+http://127.10.10.10:5010/usuarios
+http://127.10.10.10:5010/restaurantes
+http://127.10.10.10:5010/productos
+http://127.10.10.10:5010/tenderos
+http://127.10.10.10:5010/cupones
+http://127.10.10.10:5010/direcciones
+http://127.10.10.10:5010/pedidos
 ```
 #### PUT
 
 ```
-http://127.10.10.10:5510/usuarios/:id
-http://127.10.10.10:5510/restaurantes/:id
-http://127.10.10.10:5510/productos/:id
-http://127.10.10.10:5510/tenderos/:id
-http://127.10.10.10:5510/cupones/:id
-http://127.10.10.10:5510/direcciones/:id
-http://127.10.10.10:5510/pedidos/:id
+http://127.10.10.10:5010/usuarios/:id
+http://127.10.10.10:5010/restaurantes/:id
+http://127.10.10.10:5010/productos/:id
+http://127.10.10.10:5010/tenderos/:id
+http://127.10.10.10:5010/cupones/:id
+http://127.10.10.10:5010/direcciones/:id
+http://127.10.10.10:5010/pedidos/:id
 ```
 #### DELETE
 
 ```
-http://127.10.10.10:5510/usuarios/:id
-http://127.10.10.10:5510/restaurantes/:id
-http://127.10.10.10:5510/productos/:id
-http://127.10.10.10:5510/tenderos/:id
-http://127.10.10.10:5510/cupones/:id
-http://127.10.10.10:5510/direcciones/:id
-http://127.10.10.10:5510/pedidos/:id
+http://127.10.10.10:5010/usuarios/:id
+http://127.10.10.10:5010/restaurantes/:id
+http://127.10.10.10:5010/productos/:id
+http://127.10.10.10:5010/tenderos/:id
+http://127.10.10.10:5010/cupones/:id
+http://127.10.10.10:5010/direcciones/:id
+http://127.10.10.10:5010/pedidos/:id
 ```
 ### Parámetros
 
@@ -262,23 +263,23 @@ Para las consultas especiales tienes que habilitar la version 2.0.0.
 
 Este enpoint es de metodo `GET` y lo que devuelve son unicamente los cupones validos.
 ```
-http://127.10.10.10:5510/cupones
+http://127.10.10.10:5010/cupones
 ```
 
 Este enpoint es de metodo `GET` y lo que devuelve son los cupones usados por un usuario en especifico, se le debe pasar el id del usuario por el parametro 'id'.
 ```
-http://127.10.10.10:5510/cupones/:id
+http://127.10.10.10:5010/cupones/por/:id
 ```
 
 Este enpoint es de metodo `GET` y lo que devuelve es la informacion del tendero que realizara un pedido en especifico, se busca por el id del pedido en el parametro 'id'.
 ```
-http://127.10.10.10:5510/pedidos/tendero/:id
+http://127.10.10.10:5010/pedidos/tendero/:id
 ```
 
 
 Este enpoint es de metodo `GET` y lo que devuelve es la informacion de los pedidos realizados por un usuario en especifico, el id de usuario se pasa en el parametro 'id'.
 ```
-http://127.10.10.10:5510/pedidos/:id
+http://127.10.10.10:5010/pedidos/:id
 ```
 
 Este enpoint es de metodo `GET`, pero tienes que pasarle por el body el nombre de un restaurante y te devolvera la informacion de ese restaurante en especifico.
@@ -292,17 +293,17 @@ json de ejemplo.
 ```
 enpoint
 ```
-http://127.10.10.10:5510/restaurantes
+http://127.10.10.10:5010/restaurantes
 ```
 
 Este enpoint es de metodo `GET` y lo que devuelve son todos los restaurantes pero con la informacion de todos sus productos.
 ```
-http://127.10.10.10:5510/restaurantes/productos
+http://127.10.10.10:5010/restaurantes/productos
 ```
 
 Este enpoint es de metodo `GET` y es para filtrar restaurantes por la calificacion, como por ejemplo, restaurantes con una calificacion de 4 estrellas.
 ```
-http://127.10.10.10:5510/restaurantes/:qualification
+http://127.10.10.10:5010/restaurantes/por/:qualification
 ```
 
 
